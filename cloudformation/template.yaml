@@ -1,0 +1,233 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: |
+  Doggie Chic Studio - Infraestructura AWS Educativa
+  Proyecto Final Fundamentos de DevOps
+  Incluye: VPC, subnets, EC2 publica (landing/backend) y EC2 privada (intranet)
+
+Parameters:
+  KeyPairName:
+    Type: String
+    Description: "Nombre del Key Pair de EC2 (crear previamente en la consola AWS)"
+    Default: "doggiechic-key"
+
+  AmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+    Description: "AMI de Amazon Linux 2023 (actualizada automáticamente)"
+
+Resources:
+
+  # ============================================================
+  # VPC
+  # ============================================================
+  DoggieChicVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: "10.0.0.0/16"
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: doggiechic-vpc
+
+  # ============================================================
+  # INTERNET GATEWAY
+  # ============================================================
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: doggiechic-igw
+
+  AttachGateway:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref DoggieChicVPC
+      InternetGatewayId: !Ref InternetGateway
+
+  # ============================================================
+  # SUBNETS
+  # ============================================================
+  SubnetPublica:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref DoggieChicVPC
+      CidrBlock: "10.0.1.0/24"
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: doggiechic-subnet-publica
+
+  SubnetPrivada:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref DoggieChicVPC
+      CidrBlock: "10.0.2.0/24"
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: doggiechic-subnet-privada
+
+  # ============================================================
+  # ROUTE TABLE PÚBLICA
+  # ============================================================
+  RouteTablePublica:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref DoggieChicVPC
+      Tags:
+        - Key: Name
+          Value: doggiechic-rt-publica
+
+  RouteInternet:
+    Type: AWS::EC2::Route
+    DependsOn: AttachGateway
+    Properties:
+      RouteTableId: !Ref RouteTablePublica
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId: !Ref InternetGateway
+
+  SubnetPublicaRouteAssoc:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref SubnetPublica
+      RouteTableId: !Ref RouteTablePublica
+
+  # ============================================================
+  # SECURITY GROUP PÚBLICO (Landing + Backend)
+  # ============================================================
+  SGPublico:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "SG publico - Landing (8080), Backend (3000), SSH (22)"
+      VpcId: !Ref DoggieChicVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: "0.0.0.0/0"
+          Description: "SSH para administracion"
+        - IpProtocol: tcp
+          FromPort: 8080
+          ToPort: 8080
+          CidrIp: "0.0.0.0/0"
+          Description: "Landing publica"
+        - IpProtocol: tcp
+          FromPort: 3000
+          ToPort: 3000
+          CidrIp: "0.0.0.0/0"
+          Description: "Backend API"
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: "0.0.0.0/0"
+      Tags:
+        - Key: Name
+          Value: doggiechic-sg-publico
+
+  # ============================================================
+  # SECURITY GROUP PRIVADO (Intranet)
+  # ============================================================
+  SGPrivado:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "SG privado - Intranet (8081), acceso solo desde VPC"
+      VpcId: !Ref DoggieChicVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: "10.0.0.0/16"
+          Description: "SSH desde VPC (via bastion)"
+        - IpProtocol: tcp
+          FromPort: 8081
+          ToPort: 8081
+          CidrIp: "10.0.0.0/16"
+          Description: "Intranet solo desde VPC"
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: "0.0.0.0/0"
+      Tags:
+        - Key: Name
+          Value: doggiechic-sg-privado
+
+  # ============================================================
+  # EC2 PÚBLICA - Landing + Backend
+  # ============================================================
+  EC2Publica:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      KeyName: !Ref KeyPairName
+      ImageId: !Ref AmiId
+      SubnetId: !Ref SubnetPublica
+      SecurityGroupIds:
+        - !Ref SGPublico
+      Tags:
+        - Key: Name
+          Value: doggiechic-ec2-publica
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          # Instalar Docker en Amazon Linux 2023
+          yum update -y
+          yum install -y docker git
+          systemctl start docker
+          systemctl enable docker
+          usermod -aG docker ec2-user
+          # Instalar Docker Compose
+          curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          chmod +x /usr/local/bin/docker-compose
+          # Log de arranque
+          echo "[$(date)] INFO: EC2 publica lista para Doggie Chic Studio" >> /var/log/doggiechic-setup.log
+
+  # ============================================================
+  # EC2 PRIVADA - Intranet
+  # ============================================================
+  EC2Privada:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      KeyName: !Ref KeyPairName
+      ImageId: !Ref AmiId
+      SubnetId: !Ref SubnetPrivada
+      SecurityGroupIds:
+        - !Ref SGPrivado
+      Tags:
+        - Key: Name
+          Value: doggiechic-ec2-privada
+      UserData:
+        Fn::Base64: |
+          #!/bin/bash
+          yum update -y
+          yum install -y docker git
+          systemctl start docker
+          systemctl enable docker
+          usermod -aG docker ec2-user
+          echo "[$(date)] INFO: EC2 privada lista para Intranet Doggie Chic" >> /var/log/doggiechic-setup.log
+
+# ============================================================
+# OUTPUTS
+# ============================================================
+Outputs:
+  VpcId:
+    Description: "ID de la VPC"
+    Value: !Ref DoggieChicVPC
+
+  EC2PublicaIP:
+    Description: "IP publica de la EC2 (Landing + Backend)"
+    Value: !GetAtt EC2Publica.PublicIp
+
+  EC2PrivadaIP:
+    Description: "IP privada de la EC2 (Intranet)"
+    Value: !GetAtt EC2Privada.PrivateIp
+
+  LandingURL:
+    Description: "URL de la Landing publica"
+    Value: !Sub "http://${EC2Publica.PublicIp}:8080"
+
+  BackendHealthURL:
+    Description: "URL del health check del Backend"
+    Value: !Sub "http://${EC2Publica.PublicIp}:3000/api/health"

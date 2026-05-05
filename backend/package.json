@@ -1,15 +1,14 @@
 {
   "name": "doggie-chic-backend",
   "version": "1.0.0",
-  "description": "Backend for Doggie Chic Studio Intranet",
+  "description": "Backend API para Doggie Chic Studio - Proyecto DevOps",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.2",
-    "mongoose": "^8.10.1",
-    "winston": "^3.17.0"
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0"
   }
 }

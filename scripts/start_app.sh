@@ -1,9 +1,27 @@
 #!/bin/bash
-# start_app.sh
-echo "Levantando servicios en segundo plano..."
-docker-compose up -d
+# =============================================================
+# start_app.sh - Levanta los contenedores (sin rebuild)
+# Doggie Chic Studio - Proyecto DevOps
+# =============================================================
 
-echo "Servicios activos:"
-echo "🌐 Landing: http://localhost:80"
-echo "🏢 Intranet: http://localhost:8080"
-echo "⚙️  Backend: http://localhost:4000/api/health"
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$PROJECT_DIR"
+
+echo "🚀 Iniciando Doggie Chic Studio..."
+docker compose up -d
+
+echo ""
+echo "⏳ Esperando servicios (3 segundos)..."
+sleep 3
+
+echo ""
+echo "📦 Estado de contenedores:"
+docker compose ps
+
+echo ""
+echo "✅ Servicios disponibles en:"
+echo "   🌐 Landing (Internet):  http://localhost:8080"
+echo "   🔒 Intranet (Privada):  http://localhost:8081"
+echo "   ⚙️  Backend API:         http://localhost:3000/api/health"
+echo "   🗄️  MongoDB:             localhost:27017"
+echo ""

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Doggie Chic Studio - Estética canina premium. Servicios de baño, corte, spa y más para tu mascota." />
+  <title>Doggie Chic Studio | Estética Canina Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- AMBIENTE BANNER -->
+  <div class="env-banner">
+    🌐 Ambiente público: Internet
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="logo-icon">🐾</span>
+        <span class="logo-text">Doggie Chic Studio</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <button class="nav-toggle" onclick="toggleMenu()" id="nav-toggle" aria-label="Abrir menú">☰</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <div class="hero-badge">✨ Premium & Profesional</div>
+      <h1 class="hero-title">Tu mascota merece<br /><span class="accent">lo mejor</span></h1>
+      <p class="hero-subtitle">Estética canina de alta calidad con amor, cuidado y los mejores productos del mercado.</p>
+      <a href="#servicios" class="btn-primary">Conoce nuestros servicios</a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="paw-deco">🐶</div>
+        <p class="hero-card-text">Más de 500 mascotas felices</p>
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="section" id="servicios">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Nuestros Servicios</span>
+        <h2 class="section-title">Cuidado integral para tu mejor amigo</h2>
+        <p class="section-desc">Ofrecemos una gama completa de servicios de estética canina para mantener a tu mascota siempre hermosa y saludable.</p>
+      </div>
+      <div class="cards-grid" id="servicios-grid">
+        <!-- Servicios se cargan dinámicamente -->
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section class="section bg-light" id="productos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Tienda</span>
+        <h2 class="section-title">Productos premium para tu mascota</h2>
+        <p class="section-desc">Shampoos, acondicionadores, perfumes y accesorios de las mejores marcas.</p>
+      </div>
+      <div class="products-grid" id="productos-grid">
+        <!-- Productos se cargan dinámicamente -->
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="section" id="galeria">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Galería</span>
+        <h2 class="section-title">Resultados que hablan por sí solos</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item">🐩</div>
+        <div class="gallery-item">🦮</div>
+        <div class="gallery-item">🐕</div>
+        <div class="gallery-item">🐈</div>
+        <div class="gallery-item">🐾</div>
+        <div class="gallery-item">🐩</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section class="section bg-light" id="contacto">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Contáctanos</span>
+        <h2 class="section-title">Estamos para atenderte</h2>
+      </div>
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div>
+              <strong>Dirección</strong>
+              <p>Av. Principal 123, Ciudad</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <div>
+              <strong>Teléfono</strong>
+              <p>+1 (555) 123-4567</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <div>
+              <strong>Email</strong>
+              <p>info@doggieChic.com</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">⏰</span>
+            <div>
+              <strong>Horario</strong>
+              <p>Lunes a Sábado: 8am - 6pm</p>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form" id="contact-form" onsubmit="handleContact(event)">
+          <div class="form-group">
+            <label for="contact-name">Nombre</label>
+            <input type="text" id="contact-name" placeholder="Tu nombre completo" required />
+          </div>
+          <div class="form-group">
+            <label for="contact-email">Email</label>
+            <input type="email" id="contact-email" placeholder="tu@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="contact-msg">Mensaje</label>
+            <textarea id="contact-msg" rows="4" placeholder="¿Cómo podemos ayudarte?" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" id="contact-submit">Enviar mensaje</button>
+          <div id="contact-success" class="success-msg hidden">✅ ¡Mensaje enviado! Te contactaremos pronto.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo-icon">🐾</span>
+          <span class="logo-text">Doggie Chic Studio</span>
+          <p>Estética canina premium con amor y profesionalismo.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#productos">Productos</a></li>
+            <li><a href="#galeria">Galería</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 Doggie Chic Studio. Todos los derechos reservados.</p>
+        <span class="status-dot" id="api-status">● API: Verificando...</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

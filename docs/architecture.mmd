@@ -1,0 +1,41 @@
+graph TD
+    subgraph Internet ["🌐 INTERNET (Público)"]
+        Usuario["👤 Usuario Final\n(Navegador Web)"]
+    end
+
+    subgraph AWS_Public ["☁️ AWS - Subnet Pública"]
+        EC2Pub["🖥️ EC2 Pública\n(t2.micro)\nSG: 8080, 3000, 22"]
+        Landing["🌐 Landing\nNginx → Puerto 8080"]
+        BackendAPI["⚙️ Backend API\nNode.js → Puerto 3000"]
+    end
+
+    subgraph AWS_Private ["🔒 AWS - Subnet Privada"]
+        EC2Priv["🖥️ EC2 Privada\n(t2.micro)\nSG: 8081 solo VPC"]
+        Intranet["🏢 Intranet Panel\nNginx → Puerto 8081"]
+        MongoDB["🗄️ MongoDB\nPuerto 27017"]
+    end
+
+    subgraph Admin ["👔 Administrador"]
+        AdminUser["🔑 Admin\n(VPN / Bastion SSH)"]
+    end
+
+    subgraph Logs ["📊 AWS Observabilidad"]
+        CW["📋 CloudWatch Logs\napp.log stream"]
+        Filter["🔍 Metric Filter\npattern: ERROR"]
+        Alarm["🚨 CloudWatch Alarm\nthreshold: 1 error"]
+        Lambda["⚡ Lambda\n(notificación)"]
+    end
+
+    Usuario -->|"HTTP :8080"| EC2Pub
+    EC2Pub --> Landing
+    EC2Pub --> BackendAPI
+
+    AdminUser -->|"SSH → Bastion → :8081"| EC2Priv
+    EC2Priv --> Intranet
+    Intranet -->|"API calls :3000"| BackendAPI
+
+    BackendAPI -->|"mongoose"| MongoDB
+    BackendAPI -->|"app.log"| CW
+    CW --> Filter
+    Filter --> Alarm
+    Alarm -->|"trigger"| Lambda

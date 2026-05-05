@@ -3,158 +3,236 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const winston = require('winston');
 
 const app = express();
-const PORT = process.env.PORT || 4000;
-const DB_URI = process.env.DB_URI || 'mongodb://localhost:27017/doggiechic';
+const PORT = process.env.PORT || 3000;
+const DB_URI = process.env.DB_URI || 'mongodb://mongo:27017/doggiechic';
 
-// Ensure logs directory exists
+// ===== LOGS SETUP =====
 const logDir = path.join(__dirname, 'logs');
-if (!fs.existsSync(logDir)) {
-  fs.mkdirSync(logDir);
+if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
+const logFile = path.join(logDir, 'app.log');
+
+function getTimestamp() {
+  return new Date().toISOString().replace('T', ' ').substring(0, 19);
 }
 
-// Setup Winston logger
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
-  transports: [
-    new winston.transports.File({ filename: path.join(logDir, 'app.log') }),
-    new winston.transports.Console()
-  ],
-});
+function log(level, message) {
+  const line = `[${getTimestamp()}] ${level}: ${message}`;
+  console.log(line);
+  fs.appendFileSync(logFile, line + '\n', 'utf8');
+}
 
-// Middleware
+function logInfo(msg)  { log('INFO',  msg); }
+function logError(msg) { log('ERROR', msg); }
+function logWarn(msg)  { log('WARN',  msg); }
+
+// ===== MIDDLEWARE =====
 app.use(cors());
 app.use(express.json());
 
-// Request logging middleware
+// Request logger
 app.use((req, res, next) => {
-  logger.info(`Incoming request: ${req.method} ${req.url}`);
+  logInfo(`${req.method} ${req.url}`);
   next();
 });
 
-// Database Connection
+// ===== DATABASE CONNECTION =====
 mongoose.connect(DB_URI)
-  .then(() => logger.info('Connected to MongoDB'))
-  .catch(err => logger.error('MongoDB connection error:', err));
+  .then(() => logInfo('Conectado a MongoDB'))
+  .catch(err => logError(`Error MongoDB: ${err.message}`));
 
-// Mongoose Schemas & Models
-const ClienteSchema = new mongoose.Schema({ nombre: String, email: String, telefono: String }, { timestamps: true });
-const MascotaSchema = new mongoose.Schema({ nombre: String, raza: String, edad: Number, ownerId: String }, { timestamps: true });
-const ServicioSchema = new mongoose.Schema({ tipo: String, mascotaId: String, fecha: Date, notas: String, costo: Number }, { timestamps: true });
+// ===== SCHEMAS =====
+const ClienteSchema = new mongoose.Schema(
+  { nombre: String, email: String, telefono: String },
+  { timestamps: true }
+);
+const MascotaSchema = new mongoose.Schema(
+  { nombre: String, raza: String, edad: Number, ownerId: String },
+  { timestamps: true }
+);
+const ServicioSchema = new mongoose.Schema(
+  { tipo: String, mascotaId: String, fecha: Date, notas: String, costo: Number },
+  { timestamps: true }
+);
+const ProductoSchema = new mongoose.Schema(
+  { nombre: String, categoria: String, precio: Number, stock: Number },
+  { timestamps: true }
+);
+const IngresoSchema = new mongoose.Schema(
+  { concepto: String, monto: Number, categoria: String },
+  { timestamps: true }
+);
 
-const Cliente = mongoose.model('Cliente', ClienteSchema);
-const Mascota = mongoose.model('Mascota', MascotaSchema);
+const Cliente  = mongoose.model('Cliente',  ClienteSchema);
+const Mascota  = mongoose.model('Mascota',  MascotaSchema);
 const Servicio = mongoose.model('Servicio', ServicioSchema);
+const Producto = mongoose.model('Producto', ProductoSchema);
+const Ingreso  = mongoose.model('Ingreso',  IngresoSchema);
 
-// ---- Endpoints ----
+// ===== ENDPOINTS =====
 
 // GET /api/health
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date() });
+  logInfo('Health check OK');
+  res.json({
+    status: 'OK',
+    servicio: 'Doggie Chic Studio Backend',
+    puerto: PORT,
+    timestamp: new Date().toISOString(),
+    db: mongoose.connection.readyState === 1 ? 'conectada' : 'desconectada'
+  });
 });
 
-// GET /api/clientes
+// --- CLIENTES ---
 app.get('/api/clientes', async (req, res) => {
   try {
-    const clientes = await Cliente.find();
-    res.json(clientes);
-  } catch (error) {
-    logger.error(`Error fetching clientes: ${error.message}`);
-    res.status(500).json({ error: 'Server error' });
+    const data = await Cliente.find().sort({ createdAt: -1 });
+    res.json(data);
+  } catch (err) {
+    logError(`GET /api/clientes: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
   }
 });
 
-// POST /api/clientes
 app.post('/api/clientes', async (req, res) => {
   try {
-    const cliente = new Cliente(req.body);
-    await cliente.save();
-    logger.info(`Created new cliente: ${cliente.nombre}`);
-    res.status(201).json(cliente);
-  } catch (error) {
-    logger.error(`Error creating cliente: ${error.message}`);
-    res.status(500).json({ error: 'Server error' });
+    const doc = new Cliente(req.body);
+    await doc.save();
+    logInfo(`Cliente creado: ${doc.nombre}`);
+    res.status(201).json(doc);
+  } catch (err) {
+    logError(`POST /api/clientes: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
   }
 });
 
-// GET /api/mascotas
+// --- MASCOTAS ---
 app.get('/api/mascotas', async (req, res) => {
   try {
-    const mascotas = await Mascota.find();
-    res.json(mascotas);
-  } catch (error) {
-    logger.error(`Error fetching mascotas: ${error.message}`);
-    res.status(500).json({ error: 'Server error' });
+    const data = await Mascota.find().sort({ createdAt: -1 });
+    res.json(data);
+  } catch (err) {
+    logError(`GET /api/mascotas: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
   }
 });
 
-// POST /api/mascotas
 app.post('/api/mascotas', async (req, res) => {
   try {
-    const mascota = new Mascota(req.body);
-    await mascota.save();
-    logger.info(`Created new mascota: ${mascota.nombre}`);
-    res.status(201).json(mascota);
-  } catch (error) {
-    logger.error(`Error creating mascota: ${error.message}`);
-    res.status(500).json({ error: 'Server error' });
+    const doc = new Mascota(req.body);
+    await doc.save();
+    logInfo(`Mascota creada: ${doc.nombre} (${doc.raza})`);
+    res.status(201).json(doc);
+  } catch (err) {
+    logError(`POST /api/mascotas: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
   }
 });
 
-// GET /api/servicios
+// --- SERVICIOS ---
 app.get('/api/servicios', async (req, res) => {
   try {
-    const servicios = await Servicio.find();
-    res.json(servicios);
-  } catch (error) {
-    logger.error(`Error fetching servicios: ${error.message}`);
-    res.status(500).json({ error: 'Server error' });
+    const data = await Servicio.find().sort({ createdAt: -1 });
+    res.json(data);
+  } catch (err) {
+    logError(`GET /api/servicios: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
   }
 });
 
-// POST /api/servicios
 app.post('/api/servicios', async (req, res) => {
   try {
-    const servicio = new Servicio(req.body);
-    await servicio.save();
-    logger.info(`Created new servicio: ${servicio.tipo}`);
-    res.status(201).json(servicio);
-  } catch (error) {
-    logger.error(`Error creating servicio: ${error.message}`);
-    res.status(500).json({ error: 'Server error' });
+    const doc = new Servicio(req.body);
+    await doc.save();
+    logInfo(`Servicio registrado: ${doc.tipo} - $${doc.costo}`);
+    res.status(201).json(doc);
+  } catch (err) {
+    logError(`POST /api/servicios: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
   }
 });
 
-// GET /api/logs
+// --- PRODUCTOS ---
+app.get('/api/productos', async (req, res) => {
+  try {
+    const data = await Producto.find().sort({ createdAt: -1 });
+    res.json(data);
+  } catch (err) {
+    logError(`GET /api/productos: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+
+app.post('/api/productos', async (req, res) => {
+  try {
+    const doc = new Producto(req.body);
+    await doc.save();
+    logInfo(`Producto creado: ${doc.nombre} - $${doc.precio}`);
+    res.status(201).json(doc);
+  } catch (err) {
+    logError(`POST /api/productos: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+
+// --- INGRESOS ---
+app.get('/api/ingresos', async (req, res) => {
+  try {
+    const data = await Ingreso.find().sort({ createdAt: -1 });
+    res.json(data);
+  } catch (err) {
+    logError(`GET /api/ingresos: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+
+app.post('/api/ingresos', async (req, res) => {
+  try {
+    const doc = new Ingreso(req.body);
+    await doc.save();
+    logInfo(`Ingreso registrado: ${doc.concepto} - $${doc.monto}`);
+    res.status(201).json(doc);
+  } catch (err) {
+    logError(`POST /api/ingresos: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+
+// --- LOGS ---
 app.get('/api/logs', (req, res) => {
   try {
-    const logFilePath = path.join(logDir, 'app.log');
-    if (fs.existsSync(logFilePath)) {
-      const logs = fs.readFileSync(logFilePath, 'utf8');
-      const logArray = logs.trim().split('\n').map(line => JSON.parse(line)).reverse().slice(0, 50);
-      res.json(logArray);
-    } else {
-      res.json([]);
-    }
-  } catch (error) {
-    logger.error(`Error reading logs: ${error.message}`);
-    res.status(500).json({ error: 'Server error' });
+    if (!fs.existsSync(logFile)) return res.json([]);
+    const raw = fs.readFileSync(logFile, 'utf8');
+    const lines = raw.trim().split('\n').filter(Boolean);
+    // Devolver últimas 50 líneas como objetos {timestamp, level, message}
+    const parsed = lines.slice(-50).reverse().map(line => {
+      // Formato: [YYYY-MM-DD HH:mm:ss] LEVEL: message
+      const match = line.match(/^\[(.+?)\] (INFO|ERROR|WARN): (.+)$/);
+      if (match) {
+        return { timestamp: match[1], level: match[2], message: match[3] };
+      }
+      return { timestamp: '', level: 'INFO', message: line };
+    });
+    res.json(parsed);
+  } catch (err) {
+    logError(`GET /api/logs: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
   }
 });
 
-// GET /api/error-test
+// --- ERROR TEST (para CloudWatch) ---
 app.get('/api/error-test', (req, res) => {
-  logger.error('Manual error generated via /api/error-test for CloudWatch testing.');
-  res.status(500).json({ error: 'Manual error triggered' });
+  logError('ERROR simulado desde /api/error-test - usado para prueba de CloudWatch Metric Filter');
+  res.status(500).json({
+    error: 'Error manual generado',
+    mensaje: 'Este ERROR aparece en backend/logs/app.log y en CloudWatch',
+    timestamp: new Date().toISOString()
+  });
 });
 
-// Start Server
-app.listen(PORT, () => {
-  logger.info(`Backend server running on port ${PORT}`);
+// ===== START SERVER =====
+app.listen(PORT, '0.0.0.0', () => {
+  logInfo(`Backend Doggie Chic Studio corriendo en puerto ${PORT}`);
+  logInfo(`DB URI: ${DB_URI}`);
 });

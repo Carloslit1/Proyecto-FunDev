@@ -1,50 +1,55 @@
-version: "3.9"
-
 services:
-  # ----------- INTERNET (Landing pública) -----------
+  # ============================================================
+  # LANDING - Sitio público (Internet)  → Puerto 8080
+  # ============================================================
   landing:
     build: ./landing
     container_name: doggiechic_landing
     ports:
-      - "80:80"
+      - "8080:80"
     networks:
       - publica
     restart: unless-stopped
 
-  # ----------- INTRANET (Panel interno) -----------
+  # ============================================================
+  # INTRANET - Panel interno privado    → Puerto 8081
+  # ============================================================
   intranet:
     build: ./intranet
     container_name: doggiechic_intranet
     ports:
-      - "8080:80"
+      - "8081:80"
     networks:
       - privada
     restart: unless-stopped
 
-  # ----------- BACKEND (API interna) -----------
+  # ============================================================
+  # BACKEND - API Node.js/Express       → Puerto 3000
+  # ============================================================
   backend:
     build: ./backend
     container_name: doggiechic_backend
-    expose:
-      - "4000"
     ports:
-      - "4000:4000" # Mapeado para poder acceder desde local para pruebas (en produccion seria solo expose)
+      - "3000:3000"
     environment:
-      DB_URI: mongodb://mongodb:27017/doggiechic
+      PORT: 3000
+      DB_URI: mongodb://mongo:27017/doggiechic
     networks:
       - privada
     volumes:
       - ./backend/logs:/app/logs
     depends_on:
-      - mongodb
+      - mongo
     restart: unless-stopped
 
-  # ----------- DATABASE (MongoDB) -----------
-  mongodb:
+  # ============================================================
+  # MONGODB - Base de datos             → Puerto 27017
+  # ============================================================
+  mongo:
     image: mongo:6
-    container_name: doggiechic_mongodb
+    container_name: doggiechic_mongo
     ports:
-      - "27017:27017" # Solo para dev local
+      - "27017:27017"
     networks:
       - privada
     volumes:
@@ -54,7 +59,6 @@ services:
 networks:
   publica:
   privada:
-    internal: false   # false para poder probar localmente, en AWS se controla por Security Group
 
 volumes:
   mongodb_data:

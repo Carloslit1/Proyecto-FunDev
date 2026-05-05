@@ -1,9 +1,15 @@
 {
-  "name": "peluche-api",
+  "name": "doggie-chic-backend",
   "version": "1.0.0",
+  "description": "Backend for Doggie Chic Studio Intranet",
   "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
-    "express": "^4.19.2",
-    "pg": "^8.11.3"
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mongoose": "^8.10.1",
+    "winston": "^3.17.0"
   }
 }

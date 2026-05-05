@@ -71,16 +71,18 @@ Terraform crea:
 ## 🐳 Servicios Docker
 
 | Servicio | Red | Puerto | Acceso |
-|---|---|---|---|
-| `web` (landing) | publica | 80 | Internet |
-| `api` (intranet) | privada | 4000 | solo VPC interna |
-| `db` (PostgreSQL) | privada | 5432 | solo `api` |
+|----------|-----|--------|--------|
+| `landing` (Vite+React) | publica | 80 | Internet 🌐 |
+| `intranet` (Vite+React) | privada | 8080 | solo VPN/Bastion |
+| `backend` (Node+Express) | privada | 4000 | solo `landing`/`intranet` |
+| `mongodb` (Base de datos) | privada | 27017 | solo `backend` |
 
-## 📜 Logs
+## 📜 Logs y Endpoints Backend
 
-- Archivos: `logs/web/app.log`, `logs/api/api.log`.
-- Enviados a CloudWatch por el agente (configurado en user_data de la EC2).
-- Filtros de métrica detectan `ERROR` → alarma → Lambda → SNS.
+- Endpoints principales: `/api/health`, `/api/clientes`, `/api/mascotas`, `/api/servicios`, `/api/logs`
+- Logs internos guardados en: `backend/logs/app.log` (gestionado con Winston)
+- Enviados a CloudWatch via agente en producción
+- Endpoint `/api/error-test` para forzar errores y probar alarmas en AWS Lambda → SNS.
 - **No se exponen en la UI**: se consultan en la consola de AWS o con `aws logs tail`.
 
 ## 🔐 Seguridad de red

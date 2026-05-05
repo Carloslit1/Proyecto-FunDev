@@ -1,6 +1,5 @@
-#!/usr/bin/env bash
-# stop_app.sh — Detiene los contenedores
-set -e
-echo "⏹  Deteniendo contenedores..."
-docker compose down
-echo "✅ Detenidos."
+#!/bin/bash
+# stop_app.sh
+echo "Deteniendo servicios de Doggie Chic Studio..."
+docker-compose down
+echo "Servicios detenidos."

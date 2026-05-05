@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  # ----------- INTERNET (público) -----------
+  web:
+    build: .
+    container_name: doggiechic_web
+    ports:
+      - "80:3000"
+    networks:
+      - publica
+    volumes:
+      - ./logs/web:/app/logs
+    restart: unless-stopped
+
+  # ----------- INTRANET (privado) -----------
+  api:
+    build: ./backend
+    container_name: doggiechic_api
+    expose:
+      - "4000"
+    environment:
+      DB_HOST: db
+      DB_USER: doggiechic
+      DB_PASS: doggiechic123
+      DB_NAME: doggiechic
+    networks:
+      - privada
+    volumes:
+      - ./logs/api:/app/logs
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    container_name: doggiechic_db
+    environment:
+      POSTGRES_USER: doggiechic
+      POSTGRES_PASSWORD: doggiechic123
+      POSTGRES_DB: doggiechic
+    networks:
+      - privada
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+networks:
+  publica:
+  privada:
+    internal: false   # acceso restringido por SG en AWS
+
+volumes:
+  db_data:

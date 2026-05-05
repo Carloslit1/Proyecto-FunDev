@@ -1,0 +1,22 @@
+graph TB
+    subgraph Internet["Internet"]
+        U[Cliente]
+        E[Empleado remoto SSH]
+    end
+    subgraph AWS["AWS VPC 10.0.0.0/16"]
+        subgraph Pub["Subnet publica 10.0.1.0/24"]
+            ALB["EC2 Landing doggiechic_web :80"]
+            BAS["EC2 Bastion :22"]
+        end
+        subgraph Priv["Subnet privada 10.0.2.0/24"]
+            INT["EC2 Intranet doggiechic_api"]
+            RDS[("RDS PostgreSQL")]
+        end
+        CW["CloudWatch Logs + Alarms"]
+        L["Lambda notificador SNS"]
+    end
+    U -->|HTTP| ALB
+    E -->|SSH| BAS --> INT --> RDS
+    ALB -.logs.-> CW
+    INT -.logs.-> CW
+    CW --> L

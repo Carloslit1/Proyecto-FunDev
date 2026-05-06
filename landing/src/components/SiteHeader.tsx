@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
+import logoImg from "@/assets/logo.png";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -27,11 +29,13 @@ export function SiteHeader() {
           top: 0,
           zIndex: 100,
           transition: "all .4s cubic-bezier(.2,.8,.2,1)",
-          background: scrolled ? "rgba(255,255,255,.82)" : "transparent",
+          background: scrolled
+            ? "rgba(255,255,255,.9)"
+            : "linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,0))",
           backdropFilter: scrolled ? "blur(24px) saturate(160%)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(24px) saturate(160%)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(59,167,255,.15)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 2px 20px rgba(6,43,79,.06)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(0,169,157,.18)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 8px 28px rgba(6,43,79,.08)" : "none",
         }}
       >
         <div
@@ -42,65 +46,47 @@ export function SiteHeader() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            height: "68px",
+            height: scrolled ? "94px" : "122px",
+            transition: "height .35s cubic-bezier(.2,.8,.2,1)",
           }}
         >
           {/* Logo */}
           <Link
             to="/"
-            style={{ display: "flex", alignItems: "center", gap: ".625rem", textDecoration: "none" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: ".75rem",
+              textDecoration: "none",
+              minWidth: 0,
+            }}
           >
-            <span
+            <img
+              className="site-header-logo"
+              src={logoImg}
+              alt="Doggie Chic Studio"
               style={{
-                display: "grid",
-                placeItems: "center",
-                width: "38px",
-                height: "38px",
-                borderRadius: "10px",
-                background: "var(--gradient-primary)",
-                color: "white",
-                fontSize: "1rem",
-                fontWeight: 800,
-                boxShadow: "0 4px 14px rgba(59,167,255,.4)",
-                fontFamily: "var(--font-display)",
+                height: scrolled ? "82px" : "116px",
+                width: "auto",
+                objectFit: "contain",
                 flexShrink: 0,
+                transition: "height .35s cubic-bezier(.2,.8,.2,1)",
+                filter:
+                  "drop-shadow(0 10px 24px rgba(11,101,194,.26)) drop-shadow(0 4px 12px rgba(255,90,95,.16))",
               }}
-            >
-              D
-            </span>
-            <div style={{ lineHeight: 1.2 }}>
+            />
+            <div className="site-brand-copy" style={{ lineHeight: 1.2, minWidth: 0 }}>
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.125rem",
+                  fontWeight: 700,
+                  color: "var(--foreground)",
+                  letterSpacing: 0,
+                  whiteSpace: "nowrap",
                 }}
               >
-                <div
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "1.0625rem",
-                    fontWeight: 700,
-                    color: "var(--foreground)",
-                    letterSpacing: "-.02em",
-                  }}
-                >
-                  Doggie Chic{" "}
-                  <span style={{ color: "var(--color-primary)" }}>Studio</span>
-                </div>
-                <div
-                  style={{
-                    background: "rgba(59,167,255,.15)",
-                    color: "var(--color-primary)",
-                    padding: "2px 8px",
-                    borderRadius: "6px",
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  Ambiente público: Internet
-                </div>
+                Doggie Chic <span style={{ color: "var(--color-aqua)" }}>Studio</span>
               </div>
               <div
                 style={{
@@ -122,12 +108,13 @@ export function SiteHeader() {
               display: "flex",
               alignItems: "center",
               gap: ".25rem",
-              background: "rgba(255,255,255,.6)",
+              background: "rgba(255,255,255,.72)",
               backdropFilter: "blur(14px)",
               WebkitBackdropFilter: "blur(14px)",
-              border: "1px solid rgba(255,255,255,.5)",
+              border: "1px solid rgba(255,255,255,.68)",
               borderRadius: "999px",
               padding: ".375rem",
+              boxShadow: "0 8px 24px rgba(6,43,79,.06)",
             }}
             className="hidden md:flex"
           >
@@ -140,7 +127,7 @@ export function SiteHeader() {
                   style: {
                     background: "var(--gradient-primary)",
                     color: "white",
-                    boxShadow: "0 2px 10px rgba(59,167,255,.35)",
+                    boxShadow: "0 8px 18px rgba(0,169,157,.28)",
                   },
                 }}
                 style={{
@@ -224,7 +211,7 @@ export function SiteHeader() {
         <div
           style={{
             position: "fixed",
-            inset: "68px 0 0",
+            inset: `${scrolled ? 94 : 122}px 0 0`,
             zIndex: 99,
             background: "rgba(255,255,255,.96)",
             backdropFilter: "blur(24px)",
@@ -275,7 +262,7 @@ export function SiteHeader() {
             to="/intranet"
             onClick={() => setMenuOpen(false)}
             style={{
-              display: "block",
+              display: "inline-flex",
               padding: ".625rem 1.25rem",
               borderRadius: "1rem",
               fontSize: ".875rem",
@@ -284,12 +271,25 @@ export function SiteHeader() {
               textDecoration: "none",
               textAlign: "center",
               marginTop: "auto",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: ".35rem",
             }}
           >
-            Portal interno →
+            Portal interno <ArrowRight size={14} strokeWidth={2.4} />
           </Link>
         </div>
       )}
+
+      <style>{`
+        @media (max-width: 760px) {
+          .site-header-logo { height: 86px !important; }
+          .site-brand-copy { display: none !important; }
+        }
+        @media (max-width: 420px) {
+          .site-header-logo { height: 76px !important; }
+        }
+      `}</style>
     </>
   );
 }

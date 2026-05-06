@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServiciosRouteImport } from './routes/servicios'
 import { Route as NosotrosRouteImport } from './routes/nosotros'
-import { Route as IntranetRouteImport } from './routes/intranet'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -23,11 +22,6 @@ const ServiciosRoute = ServiciosRouteImport.update({
 const NosotrosRoute = NosotrosRouteImport.update({
   id: '/nosotros',
   path: '/nosotros',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IntranetRoute = IntranetRouteImport.update({
-  id: '/intranet',
-  path: '/intranet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactoRoute = ContactoRouteImport.update({
@@ -44,14 +38,12 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contacto': typeof ContactoRoute
-  '/intranet': typeof IntranetRoute
   '/nosotros': typeof NosotrosRoute
   '/servicios': typeof ServiciosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contacto': typeof ContactoRoute
-  '/intranet': typeof IntranetRoute
   '/nosotros': typeof NosotrosRoute
   '/servicios': typeof ServiciosRoute
 }
@@ -59,22 +51,20 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contacto': typeof ContactoRoute
-  '/intranet': typeof IntranetRoute
   '/nosotros': typeof NosotrosRoute
   '/servicios': typeof ServiciosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contacto' | '/intranet' | '/nosotros' | '/servicios'
+  fullPaths: '/' | '/contacto' | '/nosotros' | '/servicios'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contacto' | '/intranet' | '/nosotros' | '/servicios'
-  id: '__root__' | '/' | '/contacto' | '/intranet' | '/nosotros' | '/servicios'
+  to: '/' | '/contacto' | '/nosotros' | '/servicios'
+  id: '__root__' | '/' | '/contacto' | '/nosotros' | '/servicios'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactoRoute: typeof ContactoRoute
-  IntranetRoute: typeof IntranetRoute
   NosotrosRoute: typeof NosotrosRoute
   ServiciosRoute: typeof ServiciosRoute
 }
@@ -93,13 +83,6 @@ declare module '@tanstack/react-router' {
       path: '/nosotros'
       fullPath: '/nosotros'
       preLoaderRoute: typeof NosotrosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/intranet': {
-      id: '/intranet'
-      path: '/intranet'
-      fullPath: '/intranet'
-      preLoaderRoute: typeof IntranetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contacto': {
@@ -122,7 +105,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactoRoute: ContactoRoute,
-  IntranetRoute: IntranetRoute,
   NosotrosRoute: NosotrosRoute,
   ServiciosRoute: ServiciosRoute,
 }

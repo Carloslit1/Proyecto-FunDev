@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { BadgeCheck, Scissors, Sparkles } from "lucide-react";
 import dogBefore from "@/assets/hero-dog.jpg";
 import dogAfter from "@/assets/hero-dog-trimmed.jpg";
 
@@ -34,7 +35,10 @@ export function HeroDog() {
       <div className="absolute inset-0 rounded-full bg-gradient-primary blur-3xl opacity-30 animate-float" />
       <div
         className="relative aspect-square w-full rounded-[2.5rem] overflow-hidden shadow-glow animate-float"
-        style={{ transform: `rotate(${tilt}deg) scale(${scale})`, transition: "transform 0.4s ease-out" }}
+        style={{
+          transform: `rotate(${tilt}deg) scale(${scale})`,
+          transition: "transform 0.4s ease-out",
+        }}
       >
         <img
           src={dogBefore}
@@ -52,19 +56,25 @@ export function HeroDog() {
           style={{ opacity: afterOpacity, transition: "opacity 0.5s ease-out" }}
         />
         {/* Floating chips */}
-        <div className="absolute top-5 left-5 rounded-full bg-background/90 backdrop-blur px-3 py-1 text-xs font-semibold shadow-soft">
-          ✨ Antes
+        <div className="absolute top-5 left-5 rounded-full bg-background/90 backdrop-blur px-3 py-1 text-xs font-semibold shadow-soft inline-flex items-center gap-1.5">
+          <Sparkles size={13} strokeWidth={2.2} />
+          Antes
         </div>
         <div
-          className="absolute bottom-5 right-5 rounded-full bg-accent text-accent-foreground px-3 py-1 text-xs font-semibold shadow-soft"
+          className="absolute bottom-5 right-5 rounded-full bg-accent text-accent-foreground px-3 py-1 text-xs font-semibold shadow-soft inline-flex items-center gap-1.5"
           style={{ opacity: afterOpacity }}
         >
-          💇 Después
+          <Scissors size={13} strokeWidth={2.2} />
+          Después
         </div>
       </div>
       {/* Scissors floating */}
-      <div className="absolute -top-4 -right-2 text-4xl animate-wag select-none">✂️</div>
-      <div className="absolute -bottom-2 -left-4 text-3xl animate-float select-none">🦴</div>
+      <div className="absolute -top-4 -right-2 grid h-11 w-11 place-items-center rounded-xl bg-white text-primary shadow-soft animate-wag select-none">
+        <Scissors size={24} strokeWidth={2.15} />
+      </div>
+      <div className="absolute -bottom-2 -left-4 grid h-10 w-10 place-items-center rounded-xl bg-white text-primary shadow-soft animate-float select-none">
+        <BadgeCheck size={22} strokeWidth={2.15} />
+      </div>
     </div>
   );
 }

@@ -1,48 +1,67 @@
-// ── Imágenes: reemplaza en src/assets/imagenes/index.ts cuando tengas fotos reales
-import { banoImg, corteImg, spaImg, higienicoImg } from "@/assets/imagenes/index";
+import { ArrowRight, Clock, Sparkles } from "lucide-react";
+import bathImg from "@/assets/service-bath.jpg";
+import cutImg from "@/assets/service-cut.jpg";
+import spaImg from "@/assets/service-spa.jpg";
 
-const services = [
+const packages = [
   {
-    img: banoImg,
-    // Reemplazar con: src/assets/imagenes/servicio-bano.jpg
-    tag: "Bienestar",
-    title: "Baño profesional",
-    desc: "Productos premium hipoalergénicos, secado controlado y cuidado dermatológico para cada tipo de pelo.",
+    id: "basico",
+    img: bathImg,
+    tag: "1 hora",
+    title: "Paquete Básico",
+    precio: "$300",
+    precioAnterior: "$349.99",
+    descuento: "14%",
+    ahorro: "$49.99",
+    popular: false,
+    accentColor: "#00A99D",
+    features: ["Baño con shampoo premium", "Secado profesional", "Cepillado completo", "Perfume"],
   },
   {
-    img: corteImg,
-    // Reemplazar con: src/assets/imagenes/servicio-corte.jpg
-    tag: "Estilismo",
-    title: "Corte de manto",
-    desc: "Cortes de raza realizados por estilistas certificados con instrumentos de alta precisión.",
+    id: "premium",
+    img: cutImg,
+    tag: "2 horas",
+    title: "Paquete Premium",
+    precio: "$350",
+    precioAnterior: "$629.99",
+    descuento: "44%",
+    ahorro: "$279.99",
+    popular: true,
+    accentColor: "#1479D4",
+    features: ["Baño con shampoo premium", "Corte higiénico", "Limpieza de oídos", "Corte de uñas"],
   },
   {
-    img: higienicoImg,
-    // Reemplazar con: src/assets/imagenes/servicio-higienico.jpg
-    tag: "Higiene",
-    title: "Corte higiénico",
-    desc: "Limpieza de oídos, recorte de uñas y zona higiénica con productos dermatológicos certificados.",
-  },
-  {
+    id: "vip",
     img: spaImg,
-    // Reemplazar con: src/assets/imagenes/servicio-spa.jpg
-    tag: "Spa",
-    title: "Spa y cuidado de piel",
-    desc: "Hidratación, masajes y aromaterapia pet-safe en un ambiente diseñado para la calma.",
+    tag: "2.5 horas",
+    title: "Paquete VIP",
+    precio: "$450",
+    precioAnterior: "$899.99",
+    descuento: "50%",
+    ahorro: "$449.99",
+    popular: false,
+    accentColor: "#FF5A5F",
+    features: [
+      "Todo el Paquete Premium",
+      "Corte a medida",
+      "Masaje relajante",
+      "Tratamiento capilar",
+    ],
   },
 ];
 
 export function ServiceShowcase() {
   return (
     <section
+      id="servicios"
       className="section-shell"
-      style={{ background: "linear-gradient(175deg, #EAF4FF 0%, #F5FAFF 100%)" }}
+      style={{ background: "linear-gradient(175deg, #FFF6ED 0%, #EAF8FF 44%, #F8FCFF 100%)" }}
     >
-      <div style={{ maxWidth: "1300px", margin: "0 auto", padding: "0 2rem" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 2rem" }}>
         {/* Header */}
         <div
           className="animate-fade-up"
-          style={{ maxWidth: "680px", margin: "0 auto", textAlign: "center", marginBottom: "4.5rem" }}
+          style={{ maxWidth: "680px", margin: "0 auto", textAlign: "center", marginBottom: "4rem" }}
         >
           <span
             style={{
@@ -55,19 +74,19 @@ export function ServiceShowcase() {
               color: "var(--color-primary)",
             }}
           >
-            Experiencia premium
+            Nuestros Servicios
           </span>
           <h2
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(2.25rem, 5vw, 3.75rem)",
+              fontSize: "clamp(2rem, 4vw, 3rem)",
               fontWeight: 800,
-              marginBottom: "1.25rem",
+              marginBottom: "1rem",
               color: "var(--foreground)",
               letterSpacing: "-.03em",
             }}
           >
-            Cada visita es un{" "}
+            Paquetes que{" "}
             <em
               style={{
                 fontStyle: "italic",
@@ -77,141 +96,292 @@ export function ServiceShowcase() {
                 backgroundClip: "text",
               }}
             >
-              ritual de cuidado
+              Ofrecemos
             </em>
           </h2>
-          <p
-            style={{
-              fontSize: "1.0625rem",
-              color: "var(--color-text-secondary)",
-              lineHeight: 1.75,
-              fontWeight: 400,
-            }}
-          >
-            Servicios diseñados como un protocolo de spa, con productos especializados
-            y un equipo capacitado para tratar a tu mascota con delicadeza.
+          <p style={{ fontSize: "1rem", color: "var(--color-text-secondary)", lineHeight: 1.75 }}>
+            Elige el paquete perfecto para tu mejor amigo. Todos incluyen atención personalizada,
+            productos premium y mucho amor.
           </p>
         </div>
 
-        {/* Cards grid */}
+        {/* Package cards */}
         <div
-          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.5rem" }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "1.75rem",
+            alignItems: "stretch",
+          }}
         >
-          {services.map((s, i) => (
+          {packages.map((pkg, i) => (
             <article
-              key={s.title}
+              key={pkg.id}
               className="animate-fade-up"
               style={{
                 animationDelay: `${i * 110}ms`,
-                borderRadius: "2.25rem",
+                background: "linear-gradient(180deg, #FFFFFF 0%, #F8FCFF 100%)",
+                borderRadius: "1.75rem",
                 overflow: "hidden",
-                boxShadow: "var(--shadow-premium)",
+                boxShadow: pkg.popular
+                  ? "0 12px 44px rgba(20,121,212,0.22), 0 0 0 6px rgba(0,169,157,.08)"
+                  : "0 4px 24px rgba(26,79,138,0.10)",
+                border: pkg.popular ? "2px solid #00A99D" : "2px solid #e2e8f0",
+                display: "flex",
+                flexDirection: "column",
                 position: "relative",
-                cursor: "pointer",
-                transition: "transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s",
+                transition: "transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.transform = "translateY(-8px)";
-                el.style.boxShadow = "var(--shadow-glow)";
+                el.style.boxShadow = "0 16px 48px rgba(26,79,138,0.22)";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLElement;
                 el.style.transform = "";
-                el.style.boxShadow = "var(--shadow-premium)";
+                el.style.boxShadow = pkg.popular
+                  ? "0 8px 40px rgba(26,79,138,0.20)"
+                  : "0 4px 24px rgba(26,79,138,0.10)";
               }}
             >
-              {/* Image */}
-              <div style={{ aspectRatio: "4/5", overflow: "hidden" }}>
-                <img
-                  src={s.img}
-                  alt={`${s.title} — Doggie Chic Studio`}
-                  width={600}
-                  height={750}
-                  loading="lazy"
+              {/* Popular badge */}
+              {pkg.popular && (
+                <div
                   style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                    transition: "transform 1.3s cubic-bezier(.2,.7,.2,1)",
+                    position: "absolute",
+                    top: "1rem",
+                    right: "1rem",
+                    background: "var(--gradient-warm)",
+                    color: "white",
+                    fontSize: ".75rem",
+                    fontWeight: 700,
+                    padding: ".3rem .875rem",
+                    borderRadius: "999px",
+                    letterSpacing: ".05em",
+                    zIndex: 2,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: ".35rem",
                   }}
-                  className="svc-img"
+                >
+                  <Sparkles size={13} strokeWidth={2.4} />
+                  Más Popular
+                </div>
+              )}
+
+              {/* Image slot */}
+              <div
+                style={{
+                  height: "200px",
+                  background: `linear-gradient(135deg, ${pkg.accentColor}18 0%, ${pkg.accentColor}30 100%)`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                }}
+              >
+                <img
+                  src={pkg.img}
+                  alt={pkg.title}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </div>
 
-              {/* Overlay — stronger gradient for readability */}
+              {/* Content */}
               <div
                 style={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "linear-gradient(to top, rgba(3,26,48,.92) 0%, rgba(6,43,79,.5) 40%, rgba(6,43,79,.08) 70%, transparent 90%)",
-                }}
-              />
-
-              {/* Text content */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: "0 0 0 0",
-                  padding: "1.75rem",
+                  padding: "1.5rem 1.5rem 1.25rem",
+                  flex: 1,
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "flex-end",
                 }}
               >
-                <span
+                {/* Header row */}
+                <div
                   style={{
-                    display: "inline-block",
-                    fontSize: ".62rem",
-                    textTransform: "uppercase",
-                    letterSpacing: ".2em",
-                    fontWeight: 700,
-                    background: "rgba(255,255,255,.18)",
-                    backdropFilter: "blur(12px)",
-                    border: "1px solid rgba(255,255,255,.3)",
-                    padding: ".35rem .875rem",
-                    borderRadius: "999px",
-                    color: "white",
-                    marginBottom: ".875rem",
-                    width: "fit-content",
-                    textShadow: "0 1px 2px rgba(0,0,0,.3)",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: ".75rem",
                   }}
                 >
-                  {s.tag}
-                </span>
-                <h3
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "1.25rem",
+                      fontWeight: 700,
+                      color: "var(--foreground)",
+                    }}
+                  >
+                    {pkg.title}
+                  </h3>
+                  <span
+                    style={{
+                      fontSize: ".75rem",
+                      color: "#64748b",
+                      background:
+                        "linear-gradient(135deg, rgba(234,248,255,.9), rgba(255,240,231,.72))",
+                      padding: ".25rem .75rem",
+                      borderRadius: "999px",
+                      fontWeight: 500,
+                      whiteSpace: "nowrap",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: ".3rem",
+                    }}
+                  >
+                    <Clock size={13} strokeWidth={2.2} />
+                    {pkg.tag}
+                  </span>
+                </div>
+
+                {/* Price row */}
+                <div
                   style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "1.5rem",
-                    fontWeight: 700,
-                    color: "white",
-                    marginBottom: ".625rem",
-                    textShadow: "0 2px 8px rgba(0,0,0,.35)",
+                    display: "flex",
+                    alignItems: "baseline",
+                    gap: ".5rem",
+                    flexWrap: "wrap",
+                    marginBottom: ".25rem",
                   }}
                 >
-                  {s.title}
-                </h3>
+                  <span
+                    style={{
+                      fontSize: "2.25rem",
+                      fontWeight: 800,
+                      color: pkg.accentColor,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {pkg.precio}
+                  </span>
+                  <span
+                    style={{ fontSize: ".9rem", color: "#94a3b8", textDecoration: "line-through" }}
+                  >
+                    {pkg.precioAnterior}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: ".7rem",
+                      fontWeight: 700,
+                      background: "#dcfce7",
+                      color: "#166534",
+                      padding: ".2rem .6rem",
+                      borderRadius: "999px",
+                    }}
+                  >
+                    -{pkg.descuento}
+                  </span>
+                </div>
                 <p
                   style={{
-                    fontSize: ".875rem",
-                    color: "rgba(255,255,255,.9)",
-                    lineHeight: 1.65,
-                    textShadow: "0 1px 4px rgba(0,0,0,.3)",
+                    fontSize: ".8rem",
+                    color: "#16a34a",
+                    fontWeight: 600,
+                    marginBottom: "1.25rem",
                   }}
                 >
-                  {s.desc}
+                  Ahorras {pkg.ahorro}
                 </p>
+
+                {/* Features */}
+                <ul
+                  style={{
+                    listStyle: "none",
+                    padding: 0,
+                    margin: "0 0 1.5rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: ".6rem",
+                    flex: 1,
+                  }}
+                >
+                  {pkg.features.map((f) => (
+                    <li
+                      key={f}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: ".5rem",
+                        fontSize: ".875rem",
+                        color: "#334155",
+                      }}
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        style={{ flexShrink: 0 }}
+                      >
+                        <circle cx="10" cy="10" r="10" fill={pkg.accentColor} fillOpacity=".15" />
+                        <path
+                          d="M6 10l3 3 5-5"
+                          stroke={pkg.accentColor}
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA */}
+                <a
+                  href="#contacto"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: ".4rem",
+                    textAlign: "center",
+                    padding: ".875rem 1.5rem",
+                    borderRadius: ".875rem",
+                    fontWeight: 600,
+                    fontSize: ".9rem",
+                    textDecoration: "none",
+                    transition: "all .3s",
+                    ...(pkg.popular
+                      ? {
+                          background: `linear-gradient(135deg, #1a4f8a, #2e86de)`,
+                          color: "white",
+                          boxShadow: "0 4px 16px rgba(26,79,138,0.30)",
+                        }
+                      : {
+                          background: "transparent",
+                          color: pkg.accentColor,
+                          border: `2px solid ${pkg.accentColor}`,
+                        }),
+                  }}
+                  onMouseEnter={(e) => {
+                    const el = e.currentTarget as HTMLAnchorElement;
+                    if (!pkg.popular) {
+                      el.style.background = pkg.accentColor;
+                      el.style.color = "white";
+                    } else {
+                      el.style.opacity = ".88";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const el = e.currentTarget as HTMLAnchorElement;
+                    if (!pkg.popular) {
+                      el.style.background = "transparent";
+                      el.style.color = pkg.accentColor;
+                    } else {
+                      el.style.opacity = "1";
+                    }
+                  }}
+                >
+                  Agendar ahora <ArrowRight size={15} strokeWidth={2.4} />
+                </a>
               </div>
             </article>
           ))}
         </div>
       </div>
-
-      <style>{`
-        article:hover .svc-img { transform: scale(1.07); }
-      `}</style>
     </section>
   );
 }

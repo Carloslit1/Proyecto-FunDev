@@ -1,5 +1,6 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
+import logoUrl from "../assets/logo.png";
 
 function NotFoundComponent() {
   return (
@@ -79,6 +80,8 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/png", href: logoUrl },
+      { rel: "apple-touch-icon", href: logoUrl },
       /* SF Pro se carga automáticamente desde el SO — no se requiere importar fuentes externas */
     ],
   }),

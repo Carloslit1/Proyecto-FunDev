@@ -1,185 +1,458 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Doggie Chic Studio - Estética canina premium. Servicios de baño, corte, spa y más para tu mascota." />
-  <title>Doggie Chic Studio | Estética Canina Premium</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Doggie Chic Studio - Estética canina premium. Servicios de baño, corte, spa y más para tu mascota."
+    />
+    <title>Doggie Chic Studio | Estética Canina Premium</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- AMBIENTE BANNER -->
+    <div class="env-banner">Ambiente público: Internet</div>
 
-  <!-- AMBIENTE BANNER -->
-  <div class="env-banner">
-    🌐 Ambiente público: Internet
-  </div>
-
-  <!-- NAVBAR -->
-  <nav class="navbar" id="navbar">
-    <div class="nav-container">
-      <div class="nav-logo">
-        <span class="logo-icon">🐾</span>
-        <span class="logo-text">Doggie Chic Studio</span>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#productos">Productos</a></li>
-        <li><a href="#galeria">Galería</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-      <button class="nav-toggle" onclick="toggleMenu()" id="nav-toggle" aria-label="Abrir menú">☰</button>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero" id="inicio">
-    <div class="hero-content">
-      <div class="hero-badge">✨ Premium & Profesional</div>
-      <h1 class="hero-title">Tu mascota merece<br /><span class="accent">lo mejor</span></h1>
-      <p class="hero-subtitle">Estética canina de alta calidad con amor, cuidado y los mejores productos del mercado.</p>
-      <a href="#servicios" class="btn-primary">Conoce nuestros servicios</a>
-    </div>
-    <div class="hero-visual">
-      <div class="hero-card">
-        <div class="paw-deco">🐶</div>
-        <p class="hero-card-text">Más de 500 mascotas felices</p>
-        <div class="stars">⭐⭐⭐⭐⭐</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICIOS -->
-  <section class="section" id="servicios">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Nuestros Servicios</span>
-        <h2 class="section-title">Cuidado integral para tu mejor amigo</h2>
-        <p class="section-desc">Ofrecemos una gama completa de servicios de estética canina para mantener a tu mascota siempre hermosa y saludable.</p>
-      </div>
-      <div class="cards-grid" id="servicios-grid">
-        <!-- Servicios se cargan dinámicamente -->
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUCTOS -->
-  <section class="section bg-light" id="productos">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Tienda</span>
-        <h2 class="section-title">Productos premium para tu mascota</h2>
-        <p class="section-desc">Shampoos, acondicionadores, perfumes y accesorios de las mejores marcas.</p>
-      </div>
-      <div class="products-grid" id="productos-grid">
-        <!-- Productos se cargan dinámicamente -->
-      </div>
-    </div>
-  </section>
-
-  <!-- GALERÍA -->
-  <section class="section" id="galeria">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Galería</span>
-        <h2 class="section-title">Resultados que hablan por sí solos</h2>
-      </div>
-      <div class="gallery-grid">
-        <div class="gallery-item">🐩</div>
-        <div class="gallery-item">🦮</div>
-        <div class="gallery-item">🐕</div>
-        <div class="gallery-item">🐈</div>
-        <div class="gallery-item">🐾</div>
-        <div class="gallery-item">🐩</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACTO -->
-  <section class="section bg-light" id="contacto">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Contáctanos</span>
-        <h2 class="section-title">Estamos para atenderte</h2>
-      </div>
-      <div class="contact-wrapper">
-        <div class="contact-info">
-          <div class="contact-item">
-            <span class="contact-icon">📍</span>
-            <div>
-              <strong>Dirección</strong>
-              <p>Av. Principal 123, Ciudad</p>
-            </div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon">📞</span>
-            <div>
-              <strong>Teléfono</strong>
-              <p>+1 (555) 123-4567</p>
-            </div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon">📧</span>
-            <div>
-              <strong>Email</strong>
-              <p>info@doggieChic.com</p>
-            </div>
-          </div>
-          <div class="contact-item">
-            <span class="contact-icon">⏰</span>
-            <div>
-              <strong>Horario</strong>
-              <p>Lunes a Sábado: 8am - 6pm</p>
-            </div>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <img src="images/Logo/Logo.png" alt="Doggie Chic Studio" />
+        </div>
+        <div class="nav-center" aria-label="Información rápida">
+          <a
+            class="nav-center-item nav-center-link"
+            href="https://www.google.com/maps/place/Doggie+Chic+Studio/@25.7061671,-100.3740645,17z/data=!3m1!4b1!4m6!3m5!1s0x8662970041a93239:0x487dca25b475ebd9!8m2!3d25.7061671!4d-100.3714896!16s%2Fg%2F11x1szm6x1?entry=ttu&amp;g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span class="nav-center-kicker">Monterrey, N.L.</span>
+            <strong>Av. Paseo de los Leones 2048</strong>
+          </a>
+          <div class="nav-center-divider"></div>
+          <div class="nav-center-item">
+            <span class="nav-center-kicker">Atención premium</span>
+            <strong>Baño, corte, spa y boutique</strong>
           </div>
         </div>
-        <form class="contact-form" id="contact-form" onsubmit="handleContact(event)">
-          <div class="form-group">
-            <label for="contact-name">Nombre</label>
-            <input type="text" id="contact-name" placeholder="Tu nombre completo" required />
-          </div>
-          <div class="form-group">
-            <label for="contact-email">Email</label>
-            <input type="email" id="contact-email" placeholder="tu@email.com" required />
-          </div>
-          <div class="form-group">
-            <label for="contact-msg">Mensaje</label>
-            <textarea id="contact-msg" rows="4" placeholder="¿Cómo podemos ayudarte?" required></textarea>
-          </div>
-          <button type="submit" class="btn-primary" id="contact-submit">Enviar mensaje</button>
-          <div id="contact-success" class="success-msg hidden">✅ ¡Mensaje enviado! Te contactaremos pronto.</div>
-        </form>
+        <ul class="nav-links">
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#productos">Productos</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <button class="nav-toggle" onclick="toggleMenu()" id="nav-toggle" aria-label="Abrir menú">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
-    </div>
-  </section>
+    </nav>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <span class="logo-icon">🐾</span>
-          <span class="logo-text">Doggie Chic Studio</span>
-          <p>Estética canina premium con amor y profesionalismo.</p>
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+      <div class="hero-content">
+        <div class="hero-badge"><span class="mini-mark"></span> Premium & Profesional</div>
+        <h1 class="hero-title">Tu mascota merece<br /><span class="accent">lo mejor</span></h1>
+        <p class="hero-subtitle">
+          Estética canina de alta calidad con amor, cuidado y los mejores productos del mercado.
+        </p>
+        <div class="hero-actions">
+          <a
+            href="https://wa.me/528140062762?text=Hola%20Doggie%20Chic%20Studio%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita%20para%20mi%20mascota."
+            class="btn-primary"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Agendar por WhatsApp
+          </a>
+          <a
+            href="https://www.google.com/maps/place/Doggie+Chic+Studio/@25.7061671,-100.3740645,17z/data=!3m1!4b1!4m6!3m5!1s0x8662970041a93239:0x487dca25b475ebd9!8m2!3d25.7061671!4d-100.3714896!16s%2Fg%2F11x1szm6x1?entry=ttu&amp;g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D"
+            class="btn-secondary"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Ver ubicación
+          </a>
         </div>
-        <div class="footer-links">
-          <h4>Navegación</h4>
-          <ul>
-            <li><a href="#servicios">Servicios</a></li>
-            <li><a href="#productos">Productos</a></li>
-            <li><a href="#galeria">Galería</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-          </ul>
+        <div class="hero-highlights" aria-label="Datos principales">
+          <a
+            class="hero-highlight hero-highlight--link"
+            href="https://www.google.com/maps/place/Doggie+Chic+Studio/@25.7061671,-100.3740645,17z/data=!3m1!4b1!4m6!3m5!1s0x8662970041a93239:0x487dca25b475ebd9!8m2!3d25.7061671!4d-100.3714896!16s%2Fg%2F11x1szm6x1?entry=ttu&amp;g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span class="hero-highlight-kicker">Ubicación</span>
+            <strong>Cumbres, Monterrey</strong>
+            <small>Av. Paseo de los Leones 2048</small>
+          </a>
+          <div class="hero-highlight">
+            <span class="hero-highlight-kicker">Horario</span>
+            <strong>9:00 a.m. - 8:00 p.m.</strong>
+            <small>Lunes a sábado</small>
+          </div>
+          <div class="hero-highlight">
+            <span class="hero-highlight-kicker">Servicios</span>
+            <strong>Baño, corte y spa</strong>
+            <small>Con productos premium</small>
+          </div>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>© 2024 Doggie Chic Studio. Todos los derechos reservados.</p>
-        <span class="status-dot" id="api-status">● API: Verificando...</span>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <img class="hero-card-logo" src="images/Logo/Logo.png" alt="Doggie Chic Studio" />
+          <p class="hero-card-text">Agenda directa y atención personalizada</p>
+          <div class="rating-line" aria-label="Calificación destacada">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="hero-card-details">
+            <span>WhatsApp activo</span>
+            <strong>81 4006 2762</strong>
+          </div>
+        </div>
       </div>
-    </div>
-  </footer>
+    </section>
 
-  <script src="app.js"></script>
-</body>
+    <section class="trust-band" aria-label="Confianza Doggie Chic Studio">
+      <div class="trust-band-inner">
+        <div class="trust-item">
+          <span class="trust-mark"></span>
+          <div>
+            <strong>Atención directa</strong>
+            <p>Agenda por WhatsApp con mensaje listo.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-mark"></span>
+          <div>
+            <strong>Ubicación verificada</strong>
+            <p>Estamos en Cumbres, Monterrey.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-mark"></span>
+          <div>
+            <strong>Resultados reales</strong>
+            <p>Galería con evidencias del servicio.</p>
+          </div>
+        </div>
+        <div class="trust-item">
+          <span class="trust-mark"></span>
+          <div>
+            <strong>Cuidado premium</strong>
+            <p>Productos y trato pensado para mascotas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="section" id="servicios">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Nuestros Servicios</span>
+          <h2 class="section-title">Paquetes que Ofrecemos</h2>
+          <p class="section-desc">
+            Elige el paquete perfecto para tu mejor amigo. Todos incluyen atención personalizada,
+            productos premium y mucho amor.
+          </p>
+        </div>
+        <div class="cards-grid" id="servicios-grid">
+          <!-- Servicios se cargan dinámicamente -->
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section class="section bg-light" id="productos">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Tienda</span>
+          <h2 class="section-title">Productos premium para tu mascota</h2>
+          <p class="section-desc">
+            Opciones de cuidado, higiene, aromas, alimento, muebles y kits seleccionados para
+            complementar el servicio en casa.
+          </p>
+        </div>
+        <div class="products-grid" id="productos-grid">
+          <!-- Productos se cargan dinámicamente -->
+        </div>
+      </div>
+    </section>
+
+    <section class="companion-cta" aria-label="Agenda con Doggie Chic Studio">
+      <div class="container">
+        <div class="companion-panel">
+          <div class="companion-copy">
+            <span class="section-tag">Agenda sin vueltas</span>
+            <h2>Tu mascota puede salir limpia, cómoda y lista para foto.</h2>
+            <p>
+              Escríbenos por WhatsApp y te ayudamos a elegir el paquete ideal según tamaño, pelo y
+              lo que necesita tu mascota.
+            </p>
+            <a
+              href="https://wa.me/528140062762?text=Hola%20Doggie%20Chic%20Studio%2C%20me%20gustar%C3%ADa%20que%20me%20ayuden%20a%20elegir%20el%20paquete%20ideal%20para%20mi%20mascota."
+              class="btn-primary"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Quiero agendar
+            </a>
+          </div>
+          <div class="companion-photo">
+            <img src="images/Decor/hero-dog-trimmed.jpg" alt="Perrito arreglado en Doggie Chic" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section class="section" id="galeria">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Galería</span>
+          <h2 class="section-title">Resultados que hablan por sí solos</h2>
+          <p class="section-desc">
+            Una selección de evidencias reales donde el resultado y la mascota se aprecian mejor.
+          </p>
+        </div>
+        <div class="evidence-carousel" id="evidence-carousel" aria-label="Carrusel de resultados">
+          <button
+            class="carousel-btn carousel-btn--prev"
+            type="button"
+            aria-label="Imagen anterior"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <div class="carousel-viewport">
+            <div class="carousel-track" id="evidence-track">
+              <!-- Evidencias se cargan dinámicamente -->
+            </div>
+          </div>
+          <button
+            class="carousel-btn carousel-btn--next"
+            type="button"
+            aria-label="Imagen siguiente"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+          <div class="carousel-meta">
+            <div>
+              <span class="carousel-eyebrow">Resultados reales</span>
+              <strong id="evidence-title">Antes y después con estilo</strong>
+              <p id="evidence-caption">Cuidado profesional, higiene y detalles que se notan.</p>
+            </div>
+            <a
+              id="evidence-link"
+              class="carousel-link"
+              href="https://www.instagram.com/doggiechic_studio/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Ver evidencia
+            </a>
+          </div>
+          <div class="carousel-dots" id="evidence-dots" aria-label="Seleccionar evidencia">
+            <!-- Indicadores se cargan dinámicamente -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="section bg-light" id="contacto">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Contáctanos</span>
+          <h2 class="section-title">Estamos para atenderte</h2>
+        </div>
+        <div class="contact-wrapper">
+          <div class="contact-info">
+            <a
+              class="contact-item contact-item--link"
+              href="https://www.google.com/maps/place/Doggie+Chic+Studio/@25.7061671,-100.3740645,17z/data=!3m1!4b1!4m6!3m5!1s0x8662970041a93239:0x487dca25b475ebd9!8m2!3d25.7061671!4d-100.3714896!16s%2Fg%2F11x1szm6x1?entry=ttu&amp;g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 21s7-5.1 7-11a7 7 0 1 0-14 0c0 5.9 7 11 7 11Z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+              </span>
+              <div>
+                <strong>Dirección</strong>
+                <p>Av. Paseo de los Leones 2048, Cumbres 2o. Sector, Monterrey, N.L.</p>
+                <span class="contact-action">Abrir en Google Maps</span>
+              </div>
+            </a>
+            <a
+              class="contact-item contact-item--link"
+              href="https://wa.me/528140062762?text=Hola%20Doggie%20Chic%20Studio%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita%20para%20mi%20mascota."
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.4 19.4 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.7.6 2.5a2 2 0 0 1-.5 2.1L8 9.5a16 16 0 0 0 6.5 6.5l1.2-1.2a2 2 0 0 1 2.1-.5c.8.3 1.6.5 2.5.6a2 2 0 0 1 1.7 2Z"
+                  />
+                </svg>
+              </span>
+              <div>
+                <strong>Teléfono / WhatsApp</strong>
+                <p>+52 81 4006 2762</p>
+                <span class="contact-action">Enviar mensaje</span>
+              </div>
+            </a>
+            <div class="contact-item">
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <path d="m3 7 9 6 9-6" />
+                </svg>
+              </span>
+              <div>
+                <strong>Email</strong>
+                <p>doggiechicstudio@gmail.com</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3 2" />
+                </svg>
+              </span>
+              <div>
+                <strong>Horario</strong>
+                <p>Lunes a sábado: 9:00 a.m. - 8:00 p.m.</p>
+              </div>
+            </div>
+          </div>
+          <form class="contact-form" id="contact-form" onsubmit="handleContact(event)">
+            <div class="form-group">
+              <label for="contact-name">Nombre</label>
+              <input type="text" id="contact-name" placeholder="Tu nombre completo" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Email</label>
+              <input type="email" id="contact-email" placeholder="tu@email.com" required />
+            </div>
+            <div class="form-group">
+              <label for="contact-msg">Mensaje</label>
+              <textarea
+                id="contact-msg"
+                rows="4"
+                placeholder="¿Cómo podemos ayudarte?"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn-primary" id="contact-submit">
+              Enviar por WhatsApp
+            </button>
+            <div id="contact-success" class="success-msg hidden">
+              Te abrimos WhatsApp para enviar tu mensaje.
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <img src="images/Logo/Logo.png" alt="Doggie Chic Studio" />
+            <p class="footer-brand-line">
+              El mejor cuidado canino de Monterrey, con estilo, higiene y cariño real.
+            </p>
+            <p>
+              Estética canina premium en Cumbres para mascotas que merecen sentirse limpias, cómodas
+              y consentidas.
+            </p>
+          </div>
+          <div class="footer-links">
+            <h4>Navegación</h4>
+            <ul>
+              <li><a href="#servicios">Servicios</a></li>
+              <li><a href="#productos">Productos</a></li>
+              <li><a href="#galeria">Galería</a></li>
+              <li><a href="#contacto">Contacto</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h4>Servicios</h4>
+            <ul>
+              <li><a href="#servicios">Baño premium</a></li>
+              <li><a href="#servicios">Corte profesional</a></li>
+              <li><a href="#servicios">Spa canino</a></li>
+              <li><a href="#productos">Boutique y farmacia</a></li>
+            </ul>
+          </div>
+          <div class="footer-info">
+            <h4>Visítanos</h4>
+            <p>
+              <a
+                class="footer-address"
+                href="https://www.google.com/maps/place/Doggie+Chic+Studio/@25.7061671,-100.3740645,17z/data=!3m1!4b1!4m6!3m5!1s0x8662970041a93239:0x487dca25b475ebd9!8m2!3d25.7061671!4d-100.3714896!16s%2Fg%2F11x1szm6x1?entry=ttu&amp;g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Av. Paseo de los Leones 2048, Cumbres 2o. Sector, Monterrey, N.L.
+              </a>
+            </p>
+            <p>Lunes a sábado: 9:00 a.m. - 8:00 p.m.</p>
+            <a
+              href="https://wa.me/528140062762?text=Hola%20Doggie%20Chic%20Studio%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita%20para%20mi%20mascota."
+              target="_blank"
+              rel="noreferrer"
+            >
+              Agendar una cita
+            </a>
+          </div>
+        </div>
+        <div class="footer-promise">
+          <span>Doggie Chic Studio</span>
+          <strong>Donde cada mascota sale limpia, feliz y lista para brillar.</strong>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Doggie Chic Studio. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <a
+      class="whatsapp-float"
+      href="https://wa.me/528140062762?text=Hola%20Doggie%20Chic%20Studio%2C%20me%20gustar%C3%ADa%20agendar%20una%20cita%20para%20mi%20mascota."
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Escribir a Doggie Chic Studio por WhatsApp"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.8-2.8-1.9-3.6-3.4-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.1c-.2-.5-.4-.4-.7-.4h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 5 4.3.7.3 1.2.5 1.7.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.2-.3-.3-.6-.4Z"
+        />
+        <path
+          d="M12 2a9.9 9.9 0 0 0-8.5 15L2.4 21.6 7 20.4A10 10 0 1 0 12 2Zm0 18.1a8.1 8.1 0 0 1-4.1-1.1l-.3-.2-2.7.7.7-2.6-.2-.3A8.1 8.1 0 1 1 12 20.1Z"
+        />
+      </svg>
+      <span>WhatsApp</span>
+    </a>
+
+    <script type="module" src="app.js"></script>
+  </body>
 </html>

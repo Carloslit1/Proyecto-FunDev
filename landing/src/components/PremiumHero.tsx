@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 // ── Imagen: reemplaza heroImg en src/assets/imagenes/index.ts cuando tengas hero-doggie.jpg
 import { heroImg } from "@/assets/imagenes/index";
+import logoImg from "@/assets/logo.png";
 
 const badges = ["Cuidado premium", "Productos especializados", "Monterrey, N.L."];
 
@@ -19,15 +21,51 @@ export function PremiumHero() {
       {/* ── Ambient depth layers ── */}
       <div
         className="ambient-blob"
-        style={{ width: "640px", height: "640px", top: "-200px", left: "-200px", background: "rgba(11,101,194,.22)", animationDelay: "0s" }}
+        style={{
+          width: "640px",
+          height: "640px",
+          top: "-200px",
+          left: "-200px",
+          background: "rgba(11,101,194,.22)",
+          animationDelay: "0s",
+        }}
       />
       <div
         className="ambient-blob"
-        style={{ width: "520px", height: "520px", top: "40px", right: "-180px", background: "rgba(59,167,255,.16)", animationDelay: "5s" }}
+        style={{
+          width: "520px",
+          height: "520px",
+          top: "40px",
+          right: "-180px",
+          background: "rgba(59,167,255,.16)",
+          animationDelay: "5s",
+        }}
       />
       <div
         className="ambient-blob"
-        style={{ width: "480px", height: "480px", bottom: "-120px", left: "35%", background: "rgba(234,244,255,.95)", animationDelay: "10s" }}
+        style={{
+          width: "680px",
+          height: "280px",
+          bottom: "-120px",
+          left: "28%",
+          background: "rgba(255,90,95,.12)",
+          animationDelay: "10s",
+        }}
+      />
+      <div className="color-sweep" />
+      <img
+        src={logoImg}
+        alt=""
+        aria-hidden="true"
+        className="brand-watermark"
+        style={{
+          width: "min(62vw, 760px)",
+          minWidth: "360px",
+          right: "max(1.5rem, calc(50% - 620px))",
+          top: "7rem",
+          transform: "rotate(-7deg)",
+          zIndex: 0,
+        }}
       />
 
       {/* ── Subtle dot grid ── */}
@@ -47,17 +85,23 @@ export function PremiumHero() {
         style={{
           maxWidth: "1300px",
           margin: "0 auto",
-          padding: "5rem 2rem 6rem",
+          padding: "clamp(3rem, 6vw, 5rem) 2rem clamp(4rem, 7vw, 5.5rem)",
           width: "100%",
           position: "relative",
           zIndex: 1,
         }}
       >
-        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: "4.5rem", alignItems: "center" }} className="hero-inner">
-
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1.1fr 1fr",
+            gap: "4.5rem",
+            alignItems: "center",
+          }}
+          className="hero-inner"
+        >
           {/* ── Left — Copy ── */}
           <div className="animate-fade-up">
-
             {/* Location pill */}
             <div
               className="glass"
@@ -78,7 +122,9 @@ export function PremiumHero() {
             >
               <span
                 style={{
-                  width: "7px", height: "7px", borderRadius: "50%",
+                  width: "7px",
+                  height: "7px",
+                  borderRadius: "50%",
                   background: "var(--color-primary)",
                   display: "inline-block",
                   boxShadow: "0 0 0 3px rgba(11,101,194,.2)",
@@ -96,9 +142,9 @@ export function PremiumHero() {
                 fontWeight: 500,
                 letterSpacing: ".06em",
                 textTransform: "uppercase",
-                color: "var(--color-mid)",
+                color: "var(--color-coral)",
                 marginBottom: "1rem",
-                opacity: .9,
+                opacity: 0.9,
               }}
             >
               Doggie Chic Studio
@@ -120,7 +166,7 @@ export function PremiumHero() {
               <em
                 style={{
                   fontStyle: "italic",
-                  background: "linear-gradient(135deg, #1479D4 0%, #3BA7FF 60%)",
+                  background: "linear-gradient(135deg, #1479D4 0%, #00A99D 52%, #FF5A5F 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -156,14 +202,16 @@ export function PremiumHero() {
                 fontWeight: 400,
               }}
             >
-              Baño, corte, higiene, spa y productos especializados para consentir a tu mascota
-              en un espacio diseñado como una boutique de bienestar, en Monterrey.
+              Baño, corte, higiene, spa y productos especializados para consentir a tu mascota en un
+              espacio diseñado como una boutique de bienestar, en Monterrey.
             </p>
 
             {/* CTAs */}
-            <div style={{ display: "flex", flexWrap: "wrap", gap: ".875rem", marginBottom: "2.5rem" }}>
-              <Link to="/servicios" className="btn-premium">
-                Conocer servicios →
+            <div
+              style={{ display: "flex", flexWrap: "wrap", gap: ".875rem", marginBottom: "2.5rem" }}
+            >
+              <Link to="/servicios" className="btn-warm">
+                Conocer servicios <ArrowRight size={17} strokeWidth={2.5} />
               </Link>
               <a
                 href="https://wa.me/528112345678"
@@ -182,7 +230,7 @@ export function PremiumHero() {
                   background: "rgba(255,255,255,.78)",
                   backdropFilter: "blur(16px)",
                   WebkitBackdropFilter: "blur(16px)",
-                  border: "1.5px solid rgba(11,101,194,.2)",
+                  border: "1.5px solid rgba(0,169,157,.22)",
                   textDecoration: "none",
                   transition: "all .25s",
                   whiteSpace: "nowrap",
@@ -224,15 +272,15 @@ export function PremiumHero() {
 
           {/* ── Right — Visual ── */}
           <div className="animate-fade-up delay-200" style={{ position: "relative" }}>
-
             {/* Glow aura */}
             <div
               style={{
                 position: "absolute",
                 inset: "-3rem",
-                background: "radial-gradient(ellipse at 55% 45%, rgba(11,101,194,.28) 0%, transparent 65%)",
-                borderRadius: "40%",
-                filter: "blur(30px)",
+                background:
+                  "linear-gradient(135deg, rgba(11,101,194,.22), rgba(0,169,157,.18), rgba(255,90,95,.14))",
+                borderRadius: "3rem",
+                filter: "blur(34px)",
               }}
               className="animate-glow"
             />
@@ -243,8 +291,10 @@ export function PremiumHero() {
                 position: "relative",
                 borderRadius: "2.75rem",
                 overflow: "hidden",
-                boxShadow: "0 40px 100px -30px rgba(6,43,79,.35), 0 8px 30px -8px rgba(6,43,79,.15)",
+                boxShadow:
+                  "0 40px 100px -30px rgba(6,43,79,.35), 0 16px 40px -12px rgba(255,90,95,.18)",
                 aspectRatio: "4/5",
+                border: "1px solid rgba(255,255,255,.74)",
               }}
             >
               {/* REEMPLAZA esta imagen con hero-doggie.jpg cuando esté disponible */}
@@ -260,7 +310,8 @@ export function PremiumHero() {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background: "linear-gradient(to top, rgba(6,43,79,.72) 0%, rgba(6,43,79,.08) 45%, transparent 70%)",
+                  background:
+                    "linear-gradient(to top, rgba(6,43,79,.72) 0%, rgba(6,43,79,.08) 45%, transparent 70%)",
                 }}
               />
 
@@ -309,7 +360,7 @@ export function PremiumHero() {
                   </div>
                 </div>
                 <div style={{ display: "flex", gap: ".3rem" }}>
-                  {["#A8C7FA", "#4A90D9", "#062B4F"].map((c) => (
+                  {["#3BA7FF", "#00A99D", "#FF5A5F"].map((c) => (
                     <span
                       key={c}
                       style={{
@@ -337,15 +388,32 @@ export function PremiumHero() {
                 borderRadius: "1.25rem",
                 padding: ".875rem 1.375rem",
                 minWidth: "140px",
-                boxShadow: "0 16px 48px -12px rgba(6,43,79,.22), 0 2px 8px rgba(6,43,79,.1)",
-                border: "1px solid rgba(200,223,244,.8)",
+                boxShadow: "0 18px 54px -14px rgba(6,43,79,.24), 0 4px 14px rgba(0,169,157,.12)",
+                border: "1px solid rgba(0,169,157,.22)",
               }}
               className="animate-float"
             >
-              <div style={{ fontSize: ".65rem", color: "var(--color-text-muted)", fontWeight: 600, marginBottom: ".3rem", textTransform: "uppercase", letterSpacing: ".08em" }}>
+              <div
+                style={{
+                  fontSize: ".65rem",
+                  color: "var(--color-text-muted)",
+                  fontWeight: 600,
+                  marginBottom: ".3rem",
+                  textTransform: "uppercase",
+                  letterSpacing: ".08em",
+                }}
+              >
                 Clientes recurrentes
               </div>
-              <div style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 800, color: "var(--foreground)", lineHeight: 1 }}>
+              <div
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "2rem",
+                  fontWeight: 800,
+                  color: "var(--foreground)",
+                  lineHeight: 1,
+                }}
+              >
                 +90%
               </div>
             </div>
@@ -360,15 +428,32 @@ export function PremiumHero() {
                 borderRadius: "1.25rem",
                 padding: ".875rem 1.375rem",
                 minWidth: "150px",
-                boxShadow: "0 16px 48px -12px rgba(6,43,79,.22), 0 2px 8px rgba(6,43,79,.1)",
-                border: "1px solid rgba(200,223,244,.8)",
+                boxShadow: "0 18px 54px -14px rgba(6,43,79,.24), 0 4px 14px rgba(255,90,95,.13)",
+                border: "1px solid rgba(255,90,95,.22)",
               }}
               className="animate-float delay-400"
             >
-              <div style={{ fontSize: ".65rem", color: "var(--color-text-muted)", fontWeight: 600, marginBottom: ".3rem", textTransform: "uppercase", letterSpacing: ".08em" }}>
+              <div
+                style={{
+                  fontSize: ".65rem",
+                  color: "var(--color-text-muted)",
+                  fontWeight: 600,
+                  marginBottom: ".3rem",
+                  textTransform: "uppercase",
+                  letterSpacing: ".08em",
+                }}
+              >
                 Atención
               </div>
-              <div style={{ fontFamily: "var(--font-display)", fontSize: "1.2rem", fontWeight: 800, color: "var(--color-primary)", lineHeight: 1 }}>
+              <div
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.2rem",
+                  fontWeight: 800,
+                  color: "var(--color-primary)",
+                  lineHeight: 1,
+                }}
+              >
                 Personalizada
               </div>
             </div>

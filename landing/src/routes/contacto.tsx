@@ -35,9 +35,23 @@ function Page() {
       >
         <div
           className="ambient-blob"
-          style={{ width: "440px", height: "440px", top: "-120px", right: "-80px", background: "rgba(59,167,255,.2)" }}
+          style={{
+            width: "440px",
+            height: "440px",
+            top: "-120px",
+            right: "-80px",
+            background: "rgba(59,167,255,.2)",
+          }}
         />
-        <div style={{ maxWidth: "700px", margin: "0 auto", padding: "0 1.5rem", position: "relative", zIndex: 1 }}>
+        <div
+          style={{
+            maxWidth: "700px",
+            margin: "0 auto",
+            padding: "0 1.5rem",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
           <div className="animate-fade-up">
             <span className="label-overline" style={{ display: "block", marginBottom: ".75rem" }}>
               Contacto
@@ -51,8 +65,7 @@ function Page() {
                 marginBottom: "1.25rem",
               }}
             >
-              Hablemos sobre{" "}
-              <span className="text-gradient">tu mascota</span>
+              Hablemos sobre <span className="text-gradient">tu mascota</span>
             </h1>
             <p
               style={{
@@ -63,8 +76,8 @@ function Page() {
                 margin: "0 auto",
               }}
             >
-              Envíanos tu consulta, llámanos o escríbenos por WhatsApp.
-              Atendemos todos los días de 9:00 a.m. a 8:00 p.m.
+              Envíanos tu consulta, llámanos o escríbenos por WhatsApp. Atendemos todos los días de
+              9:00 a.m. a 8:00 p.m.
             </p>
           </div>
         </div>

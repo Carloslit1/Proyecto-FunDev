@@ -1,13 +1,27 @@
 import { Link } from "@tanstack/react-router";
+import type { LucideIcon } from "lucide-react";
+import { ArrowRight, Brush, Droplets, Package, ShieldCheck } from "lucide-react";
 // ── Imagen: reemplaza productosImg en src/assets/imagenes/index.ts → productos-doggie.jpg
 import { productosImg } from "@/assets/imagenes/index";
 
 const products = [
-  { name: "Perfume pet-safe",        cat: "Boutique",  price: "$240", icon: "◎" },
-  { name: "Antiparasitario premium", cat: "Farmacia",  price: "$380", icon: "◇" },
-  { name: "Shampoo dermatológico",   cat: "Cuidado",   price: "$310", icon: "✦" },
-  { name: "Cepillo dental canino",   cat: "Higiene",   price: "$160", icon: "✿" },
-];
+  { name: "Perfume pet-safe", cat: "Boutique", price: "$240", icon: Package, color: "#FF5A5F" },
+  {
+    name: "Antiparasitario premium",
+    cat: "Farmacia",
+    price: "$380",
+    icon: ShieldCheck,
+    color: "#1479D4",
+  },
+  {
+    name: "Shampoo dermatológico",
+    cat: "Cuidado",
+    price: "$310",
+    icon: Droplets,
+    color: "#00A99D",
+  },
+  { name: "Cepillo dental canino", cat: "Higiene", price: "$160", icon: Brush, color: "#F59E0B" },
+] satisfies Array<{ name: string; cat: string; price: string; icon: LucideIcon; color: string }>;
 
 const categories = ["Perfumes", "Antiparasitarios", "Accesorios", "Juguetes", "Higiene canina"];
 
@@ -16,17 +30,31 @@ export function ProductPreview() {
     <section
       className="section-shell"
       style={{
-        background: "linear-gradient(170deg, #FFFFFF 0%, #EAF4FF 100%)",
+        background: "linear-gradient(170deg, #FFFFFF 0%, #EAF8FF 48%, #FFF6ED 100%)",
         position: "relative",
         overflow: "hidden",
       }}
     >
       <div
         className="ambient-blob"
-        style={{ width: "380px", height: "380px", bottom: "-60px", left: "-60px", background: "rgba(11,101,194,.14)" }}
+        style={{
+          width: "380px",
+          height: "380px",
+          bottom: "-60px",
+          left: "-60px",
+          background: "rgba(11,101,194,.14)",
+        }}
       />
 
-      <div style={{ maxWidth: "1300px", margin: "0 auto", padding: "0 2rem", position: "relative", zIndex: 1 }}>
+      <div
+        style={{
+          maxWidth: "1300px",
+          margin: "0 auto",
+          padding: "0 2rem",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
         {/* Header */}
         <div className="animate-fade-up" style={{ textAlign: "center", marginBottom: "3.5rem" }}>
           <span
@@ -75,15 +103,21 @@ export function ProductPreview() {
               fontWeight: 400,
             }}
           >
-            Perfumes, antiparasitarios, accesorios, juguetes e higiene seleccionados
-            para complementar el cuidado en casa.
+            Perfumes, antiparasitarios, accesorios, juguetes e higiene seleccionados para
+            complementar el cuidado en casa.
           </p>
         </div>
 
         {/* Category pills */}
         <div
           className="animate-fade-up delay-100"
-          style={{ display: "flex", flexWrap: "wrap", gap: ".625rem", justifyContent: "center", marginBottom: "4rem" }}
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: ".625rem",
+            justifyContent: "center",
+            marginBottom: "4rem",
+          }}
         >
           {categories.map((c, i) => (
             <span
@@ -109,7 +143,12 @@ export function ProductPreview() {
 
         {/* Main grid */}
         <div
-          style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: "3.5rem", alignItems: "center" }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1.2fr",
+            gap: "3.5rem",
+            alignItems: "center",
+          }}
           className="product-grid"
         >
           {/* Image side */}
@@ -118,8 +157,9 @@ export function ProductPreview() {
               style={{
                 position: "absolute",
                 inset: "-2.5rem",
-                background: "radial-gradient(ellipse at 50% 50%, rgba(11,101,194,.22) 0%, transparent 70%)",
-                borderRadius: "50%",
+                background:
+                  "linear-gradient(135deg, rgba(11,101,194,.18), rgba(0,169,157,.18), rgba(255,90,95,.12))",
+                borderRadius: "3rem",
                 filter: "blur(35px)",
               }}
               className="animate-glow"
@@ -193,69 +233,91 @@ export function ProductPreview() {
           {/* Products side */}
           <div className="animate-fade-up delay-200">
             <div
-              style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2.25rem" }}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "1rem",
+                marginBottom: "2.25rem",
+              }}
             >
-              {products.map((p) => (
-                <div
-                  key={p.name}
-                  style={{
-                    background: "white",
-                    borderRadius: "1.375rem",
-                    border: "1.5px solid var(--border)",
-                    boxShadow: "var(--shadow-card)",
-                    padding: "1.375rem",
-                    transition: "transform .3s, box-shadow .3s, border-color .25s",
-                    cursor: "default",
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.transform = "translateY(-4px)";
-                    el.style.boxShadow = "var(--shadow-premium)";
-                    el.style.borderColor = "rgba(11,101,194,.25)";
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLElement;
-                    el.style.transform = "";
-                    el.style.boxShadow = "var(--shadow-card)";
-                    el.style.borderColor = "var(--border)";
-                  }}
-                >
-                  <div style={{ fontSize: "1.375rem", marginBottom: ".625rem", color: "var(--color-primary)" }}>
-                    {p.icon}
-                  </div>
+              {products.map((p) => {
+                const Icon = p.icon;
+                return (
                   <div
+                    key={p.name}
                     style={{
-                      fontSize: ".62rem",
-                      textTransform: "uppercase",
-                      letterSpacing: ".12em",
-                      fontWeight: 700,
-                      color: "var(--color-text-muted)",
-                      marginBottom: ".3rem",
+                      background: "white",
+                      borderRadius: "1.375rem",
+                      border: "1.5px solid var(--border)",
+                      boxShadow: "var(--shadow-card)",
+                      padding: "1.375rem",
+                      transition: "transform .3s, box-shadow .3s, border-color .25s",
+                      cursor: "default",
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLElement;
+                      el.style.transform = "translateY(-4px)";
+                      el.style.boxShadow = "var(--shadow-premium)";
+                      el.style.borderColor = "rgba(11,101,194,.25)";
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLElement;
+                      el.style.transform = "";
+                      el.style.boxShadow = "var(--shadow-card)";
+                      el.style.borderColor = "var(--border)";
                     }}
                   >
-                    {p.cat}
+                    <div
+                      className="icon-tile"
+                      style={{
+                        width: "44px",
+                        height: "44px",
+                        marginBottom: ".875rem",
+                        color: p.color,
+                      }}
+                    >
+                      <Icon size={22} strokeWidth={2.15} />
+                    </div>
+                    <div
+                      style={{
+                        fontSize: ".62rem",
+                        textTransform: "uppercase",
+                        letterSpacing: ".12em",
+                        fontWeight: 700,
+                        color: "var(--color-text-muted)",
+                        marginBottom: ".3rem",
+                      }}
+                    >
+                      {p.cat}
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 700,
+                        fontSize: ".9375rem",
+                        color: "var(--foreground)",
+                        marginBottom: ".5rem",
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {p.name}
+                    </div>
+                    <div
+                      style={{
+                        fontWeight: 800,
+                        color: "var(--color-primary)",
+                        fontSize: "1.0625rem",
+                      }}
+                    >
+                      {p.price}
+                    </div>
                   </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 700,
-                      fontSize: ".9375rem",
-                      color: "var(--foreground)",
-                      marginBottom: ".5rem",
-                      lineHeight: 1.3,
-                    }}
-                  >
-                    {p.name}
-                  </div>
-                  <div style={{ fontWeight: 800, color: "var(--color-primary)", fontSize: "1.0625rem" }}>
-                    {p.price}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            <Link to="/contacto" className="btn-premium" style={{ display: "inline-flex" }}>
-              Explorar productos →
+            <Link to="/contacto" className="btn-warm" style={{ display: "inline-flex" }}>
+              Explorar productos <ArrowRight size={17} strokeWidth={2.5} />
             </Link>
           </div>
         </div>

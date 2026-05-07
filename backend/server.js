@@ -64,11 +64,53 @@ const IngresoSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+const PaqueteCatalogoSchema = new mongoose.Schema({
+  id_codigo: String, img: String, nombre: String, duracion: String, precio: String, 
+  precioAnterior: String, descuento: String, ahorro: String, popular: Boolean, features: [String]
+});
+const ProductoCatalogoSchema = new mongoose.Schema({
+  icon: String, nombre: String, categoria: String, detalle: String
+});
+
 const Cliente  = mongoose.model('Cliente',  ClienteSchema);
 const Mascota  = mongoose.model('Mascota',  MascotaSchema);
 const Servicio = mongoose.model('Servicio', ServicioSchema);
 const Producto = mongoose.model('Producto', ProductoSchema);
 const Ingreso  = mongoose.model('Ingreso',  IngresoSchema);
+const PaqueteCatalogo = mongoose.model('PaqueteCatalogo', PaqueteCatalogoSchema);
+const ProductoCatalogo = mongoose.model('ProductoCatalogo', ProductoCatalogoSchema);
+
+// ===== SEED DATA (Autocompletado de la Base de Datos) =====
+async function seedCatalogos() {
+  try {
+    const paquetesCount = await PaqueteCatalogo.countDocuments();
+    if (paquetesCount === 0) {
+      logInfo('Sembrando base de datos con paquetes de servicios...');
+      await PaqueteCatalogo.insertMany([
+        { id_codigo: "basico", img: "images/Paquetes/Paquete_basico.jpg", nombre: "Paquete Básico", duracion: "1 hora", precio: "$300", precioAnterior: "$349.99", descuento: "14%", ahorro: "$49.99", popular: false, features: ["Baño con shampoo premium", "Secado profesional", "Cepillado completo", "Perfume"] },
+        { id_codigo: "premium", img: "images/Paquetes/Paquete_completo.jpg", nombre: "Paquete Premium", duracion: "2 horas", precio: "$350", precioAnterior: "$629.99", descuento: "44%", ahorro: "$279.99", popular: true, features: ["Baño con shampoo premium", "Corte higiénico", "Limpieza de oídos", "Corte de uñas"] },
+        { id_codigo: "vip", img: "images/Paquetes/Paquete_spa.jpg", nombre: "Paquete VIP", duracion: "2.5 horas", precio: "$450", precioAnterior: "$899.99", descuento: "50%", ahorro: "$449.99", popular: false, features: ["Todo el Paquete Premium", "Corte a medida", "Masaje relajante", "Tratamiento capilar"] }
+      ]);
+    }
+
+    const productosCount = await ProductoCatalogo.countDocuments();
+    if (productosCount === 0) {
+      logInfo('Sembrando base de datos con catálogo de productos...');
+      await ProductoCatalogo.insertMany([
+        { icon: "comb", nombre: "Cuidado diario", categoria: "Cepillos y básicos", detalle: "Rutina en casa" },
+        { icon: "bottle", nombre: "Shampoo", categoria: "Higiene premium", detalle: "Baño suave" },
+        { icon: "spray", nombre: "Perfume", categoria: "Aroma pet-safe", detalle: "Toque final" },
+        { icon: "bowl", nombre: "Snacks y comida", categoria: "Nutrición", detalle: "Selección saludable" },
+        { icon: "sofa", nombre: "Muebles", categoria: "Descanso y hogar", detalle: "Confort para casa" },
+        { icon: "kit", nombre: "Kits de cuidado", categoria: "Rutina completa", detalle: "Todo listo" }
+      ]);
+    }
+  } catch (err) {
+    logError(`Error al sembrar DB: ${err.message}`);
+  }
+}
+
+mongoose.connection.once('open', seedCatalogos);
 
 // ===== ENDPOINTS =====
 
@@ -229,6 +271,27 @@ app.get('/api/error-test', (req, res) => {
     mensaje: 'Este ERROR aparece en backend/logs/app.log y en CloudWatch',
     timestamp: new Date().toISOString()
   });
+});
+
+// --- CATÁLOGOS PÚBLICOS (Para Landing Page) ---
+app.get('/api/catalogo/paquetes', async (req, res) => {
+  try {
+    const data = await PaqueteCatalogo.find();
+    res.json(data);
+  } catch (err) {
+    logError(`GET /api/catalogo/paquetes: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+});
+
+app.get('/api/catalogo/productos', async (req, res) => {
+  try {
+    const data = await ProductoCatalogo.find();
+    res.json(data);
+  } catch (err) {
+    logError(`GET /api/catalogo/productos: ${err.message}`);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
 });
 
 // ===== START SERVER =====

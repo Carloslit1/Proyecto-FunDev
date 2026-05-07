@@ -185,12 +185,32 @@ function buildPackageWhatsAppUrl(service) {
 }
 
 // Renderizar paquetes de servicios
-function renderServicios() {
+async function renderServicios() {
+  let paquetes = [];
+  try {
+    const res = await fetch(`${API_BASE}/api/catalogo/paquetes`, { signal: AbortSignal.timeout(3000) });
+    if (res.ok) {
+      paquetes = await res.json();
+      // Asegurarse de mantener el orden si es necesario
+      if (paquetes.length > 0) {
+        // Ordenar basico, premium, vip
+        const orden = { "basico": 1, "premium": 2, "vip": 3 };
+        paquetes.sort((a, b) => (orden[a.id_codigo] || 99) - (orden[b.id_codigo] || 99));
+      }
+    }
+  } catch (error) {
+    console.warn("No se pudo cargar desde la API, usando fallback:", error);
+  }
+
+  if (paquetes.length === 0) {
+    paquetes = SERVICIOS_DATA;
+  }
+
   const grid = document.getElementById("servicios-grid");
   if (!grid) return;
-  grid.innerHTML = SERVICIOS_DATA.map(
+  grid.innerHTML = paquetes.map(
     (s) => `
-    <div class="package-card ${s.popular ? "package-card--popular" : ""}" id="pkg-${s.id}">
+    <div class="package-card ${s.popular ? "package-card--popular" : ""}" id="pkg-${s.id_codigo || s.id}">
       ${s.popular ? `<div class="pkg-popular-badge">${iconSvg("sparkles", "inline-icon")} Más Popular</div>` : ""}
       <div class="pkg-img-wrap">
         <img src="${s.img}" alt="${s.nombre}" class="pkg-img" onerror="this.style.display='none'" />
@@ -215,10 +235,24 @@ function renderServicios() {
 }
 
 // Renderizar productos
-function renderProductos() {
+async function renderProductos() {
+  let productos = [];
+  try {
+    const res = await fetch(`${API_BASE}/api/catalogo/productos`, { signal: AbortSignal.timeout(3000) });
+    if (res.ok) {
+      productos = await res.json();
+    }
+  } catch (error) {
+    console.warn("No se pudo cargar productos desde API, usando fallback:", error);
+  }
+
+  if (productos.length === 0) {
+    productos = PRODUCTOS_DATA;
+  }
+
   const grid = document.getElementById("productos-grid");
   if (!grid) return;
-  grid.innerHTML = PRODUCTOS_DATA.map(
+  grid.innerHTML = productos.map(
     (p) => `
     <div class="product-card">
       <span class="product-icon">${iconSvg(p.icon, "product-svg")}</span>
@@ -381,9 +415,9 @@ window.addEventListener("scroll", () => {
 });
 
 // Inicializar
-document.addEventListener("DOMContentLoaded", () => {
-  renderServicios();
-  renderProductos();
+document.addEventListener("DOMContentLoaded", async () => {
+  await renderServicios();
+  await renderProductos();
   initEvidenceCarousel();
   checkApiStatus();
 });

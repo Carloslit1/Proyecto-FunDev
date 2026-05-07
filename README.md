@@ -1,10 +1,10 @@
-# 🐾 Doggie Chic Studio — Proyecto Final DevOps
+# Doggie Chic Studio — Proyecto Final DevOps
 
 > **Estética canina premium** | Proyecto Final - Fundamentos de DevOps
 
 ---
 
-## 📋 Descripción del Negocio
+## Descripción del Negocio
 
 **Doggie Chic Studio** es una estética canina premium que ofrece servicios de baño, corte, spa y productos especializados para mascotas.
 
@@ -17,7 +17,7 @@ Este proyecto implementa una arquitectura DevOps completa con:
 
 ---
 
-## 🏗️ Diferencia Internet vs Intranet
+## Diferencia Internet vs Intranet
 
 | Aspecto | Landing (Internet) | Intranet (Privada) |
 |---------|-------------------|-------------------|
@@ -29,12 +29,12 @@ Este proyecto implementa una arquitectura DevOps completa con:
 
 ---
 
-## 🐳 Cómo correr localmente
+## Cómo correr localmente
 
 ### Paso 1 — Encender Docker Desktop en Mac
 
 1. Abre **Docker Desktop** desde Applications o Spotlight (`⌘ Space` → "Docker")
-2. Espera el ícono de la ballena 🐳 en la barra superior
+2. Espera el ícono de la ballena en la barra superior
 3. Verifica con:
 ```bash
 docker --version
@@ -69,7 +69,7 @@ Deberías ver 4 contenedores:
 
 ---
 
-## 🧪 Comandos de prueba
+## Comandos de prueba
 
 ```bash
 # Levantar sin rebuild
@@ -99,7 +99,7 @@ curl http://localhost:3000/api/error-test
 
 ---
 
-## 🛠️ Scripts Bash
+## Scripts Bash
 
 | Script | Función |
 |--------|---------|
@@ -110,7 +110,7 @@ curl http://localhost:3000/api/error-test
 
 ---
 
-## 📋 Endpoints del Backend
+## Endpoints del Backend
 
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
@@ -130,7 +130,7 @@ curl http://localhost:3000/api/error-test
 
 ---
 
-## 📄 Logs del Sistema
+## Logs del Sistema
 
 Los logs se guardan en `backend/logs/app.log` con el formato:
 
@@ -150,7 +150,7 @@ Ejemplo real:
 
 ---
 
-## ☁️ Instrucciones básicas para AWS
+## Instrucciones básicas para AWS
 
 ### Prerrequisitos en el Laboratorio AWS
 
@@ -190,11 +190,11 @@ chmod +x scripts/*.sh
 ./scripts/deploy.sh
 ```
 
-> ⚠️ **Nota IAM**: No se incluyen roles IAM personalizados para compatibilidad con laboratorios educativos. CloudWatch Logs requiere el rol `CloudWatchLogsFullAccess` — asignarlo manualmente en la consola AWS si está disponible.
+> **Nota IAM**: No se incluyen roles IAM personalizados para compatibilidad con laboratorios educativos. CloudWatch Logs requiere el rol `CloudWatchLogsFullAccess` — asignarlo manualmente en la consola AWS si está disponible.
 
 ---
 
-## 🗂️ Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 doggie-chic-devops/
@@ -229,7 +229,7 @@ doggie-chic-devops/
 
 ---
 
-## 👨‍💻 Autor
+## Autor
 
 Proyecto Final — Fundamentos de DevOps  
 **Doggie Chic Studio** — Estética Canina Premium

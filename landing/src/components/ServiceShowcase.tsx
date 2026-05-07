@@ -1,9 +1,12 @@
+import { useState, useEffect } from "react";
 import { ArrowRight, Clock, Sparkles } from "lucide-react";
 import bathImg from "@/assets/service-bath.jpg";
 import cutImg from "@/assets/service-cut.jpg";
 import spaImg from "@/assets/service-spa.jpg";
 
-const packages = [
+const API_BASE = "http://localhost:3000";
+
+const FALLBACK_PACKAGES = [
   {
     id: "basico",
     img: bathImg,
@@ -51,6 +54,43 @@ const packages = [
 ];
 
 export function ServiceShowcase() {
+  const [packages, setPackages] = useState(FALLBACK_PACKAGES);
+
+  useEffect(() => {
+    async function fetchPackages() {
+      try {
+        const res = await fetch(`${API_BASE}/api/catalogo/paquetes`, { signal: AbortSignal.timeout(3000) });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            // Map the data correctly to include images and correct fields
+            const mappedData = data.map((pkg: any) => ({
+              id: pkg.id_codigo || pkg.id,
+              img: pkg.id_codigo === "basico" ? bathImg : pkg.id_codigo === "premium" ? cutImg : spaImg,
+              tag: pkg.duracion,
+              title: pkg.nombre,
+              precio: pkg.precio,
+              precioAnterior: pkg.precioAnterior,
+              descuento: pkg.descuento,
+              ahorro: pkg.ahorro,
+              popular: pkg.popular,
+              accentColor: pkg.id_codigo === "basico" ? "#00A99D" : pkg.id_codigo === "premium" ? "#1479D4" : "#FF5A5F",
+              features: pkg.features,
+            }));
+            
+            const orden = { "basico": 1, "premium": 2, "vip": 3 };
+            mappedData.sort((a: any, b: any) => (orden[a.id as keyof typeof orden] || 99) - (orden[b.id as keyof typeof orden] || 99));
+            
+            setPackages(mappedData);
+          }
+        }
+      } catch (error) {
+        console.warn("No se pudo cargar desde la API, usando fallback:", error);
+      }
+    }
+    fetchPackages();
+  }, []);
+
   return (
     <section
       id="servicios"

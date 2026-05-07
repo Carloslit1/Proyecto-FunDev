@@ -1,31 +1,62 @@
+import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
-import { ArrowRight, Brush, Droplets, Package, ShieldCheck } from "lucide-react";
+import { ArrowRight, Brush, Droplets, Package, ShieldCheck, HeartPulse, Sofa } from "lucide-react";
 // ── Imagen: reemplaza productosImg en src/assets/imagenes/index.ts → productos-doggie.jpg
 import { productosImg } from "@/assets/imagenes/index";
 
-const products = [
+const FALLBACK_PRODUCTS = [
   { name: "Perfume pet-safe", cat: "Boutique", price: "$240", icon: Package, color: "#FF5A5F" },
-  {
-    name: "Antiparasitario premium",
-    cat: "Farmacia",
-    price: "$380",
-    icon: ShieldCheck,
-    color: "#1479D4",
-  },
-  {
-    name: "Shampoo dermatológico",
-    cat: "Cuidado",
-    price: "$310",
-    icon: Droplets,
-    color: "#00A99D",
-  },
+  { name: "Antiparasitario premium", cat: "Farmacia", price: "$380", icon: ShieldCheck, color: "#1479D4" },
+  { name: "Shampoo dermatológico", cat: "Cuidado", price: "$310", icon: Droplets, color: "#00A99D" },
   { name: "Cepillo dental canino", cat: "Higiene", price: "$160", icon: Brush, color: "#F59E0B" },
 ] satisfies Array<{ name: string; cat: string; price: string; icon: LucideIcon; color: string }>;
+
+const API_BASE = "http://localhost:3000";
+
+function getIconComponent(iconName: string): LucideIcon {
+  switch(iconName) {
+    case "comb": return Brush;
+    case "bottle": return Droplets;
+    case "spray": return Package;
+    case "bowl": return HeartPulse;
+    case "sofa": return Sofa;
+    case "kit": return ShieldCheck;
+    default: return Package;
+  }
+}
 
 const categories = ["Perfumes", "Antiparasitarios", "Accesorios", "Juguetes", "Higiene canina"];
 
 export function ProductPreview() {
+  const [products, setProducts] = useState(FALLBACK_PRODUCTS);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await fetch(`${API_BASE}/api/catalogo/productos`, { signal: AbortSignal.timeout(3000) });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            // Take the first 4 products or random 4
+            const colors = ["#FF5A5F", "#1479D4", "#00A99D", "#F59E0B"];
+            const mappedData = data.slice(0, 4).map((p: any, i: number) => ({
+              name: p.nombre,
+              cat: p.categoria,
+              price: "Desde $150", // Or map a real price if available
+              icon: getIconComponent(p.icon),
+              color: colors[i % colors.length]
+            }));
+            setProducts(mappedData);
+          }
+        }
+      } catch (error) {
+        console.warn("No se pudo cargar productos desde API, usando fallback:", error);
+      }
+    }
+    fetchProducts();
+  }, []);
+
   return (
     <section
       className="section-shell"
